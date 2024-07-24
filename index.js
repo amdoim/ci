@@ -1,14 +1,10 @@
-import { Core } from './core.js'
+import { Core } from './core/core.js'
 
 const core = Core()
 
-try {
-    console.log('[index] cold started')
-    core.start()
-
-} catch (error) {
-
-    console.log('[index] an error occurred')
-    console.log('[index]', error)
-
-}
+core.start()
+        .then(e=>console.log('[index] cold started'))
+        .catch((error)=>{
+            console.log('[index] an error occurred')
+            console.log('[index]', error)
+        })

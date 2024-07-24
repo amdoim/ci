@@ -5,11 +5,11 @@ import { compact } from "../utils/response.helper"
 // Create and Save a new Messages
 function AppController(){  
 
-
   const index = (req, res) => {
     console.log('[app.controller.index] done')
-    
-    res.render('index', compact({eu : 'kkkkkkkkkkkkkkkkkkjunior'}))
+    let it = {eu : 'junior'}    
+    let ot = {... it, tu: 'vossamercerdes'}    
+    res.render('index', compact(ot))
   }
 
   const create = async (req, res) => {
@@ -17,8 +17,6 @@ function AppController(){
       name: req.body.name,
       email: req.body.email
     }
-
-
     await Db.user.create({
         data: {
           name: 'Alice',
@@ -34,8 +32,7 @@ function AppController(){
       res.status(200); 
       res.send('success')
     }).catch((e)=>{
-      res.status(500); 
-      res.send(e)
+      res.status(500).send({e:e.code})
     })
   }
 
@@ -46,110 +43,52 @@ function AppController(){
       res.render('users', compact(response[0]))
     }).catch((error)=>{
       res.status(500); res.send(error)
-    })
+    }).then(response=>res.send(response)).catch(e=>res.send(e))
   }
 
   // Find a single message with a messageId
   const findOne = async(req, res) => {
-    const allUsers = await Db.user.findMany({
+    const allUsers = await Db.user.findUnique({
       where: {
-        id: req.params.id
+        id: parseInt(req.params.id)
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true
       }
     }).then((response)=>{
-      res.render('users', compact(response[0]))
+      let ok = (response.id) ? 1 : 0
+      res.render('users', compact({... response, ok}))
     }).catch((error)=>{
       res.status(500); res.send(error)
     })
   }
-  // Find a single message with a STRING
-  //'^' +search + '$', 'i'  busca exata sem case sensitive
-  const find = (req, res) => {
-    const queryx = req.params.messageId ? 
-      { regI: new RegExp(decodeURI(req.params.messageId.replace(/\+/g, " ")), 'i') } : 
-      { regI: new RegExp(`^${decodeURI(req.params.nomeGiria.replace(/\+/g, " "))}\$`, 'i') }
-    //console.log(queryx)
-    const temp = req.params.messageId ? { texto : queryx.regI } : { titulo : queryx.regI }
-    App.find( temp )
-      .then((data) => {
-        if (!data) {
-          return res.status(404).send({
-            message: "Message not found with id " + req.params.messageId,
-          })
-        }
-        const newdata = (data.length > 0) ? data : {message: "vazio"}
-        res.send(newdata)
-        //console.log(queryx)
-      })
-      .catch((err) => {
-        if (err.kind === "ObjectId") {
-          return res.status(404).send({
-            message: "Message not found with id " + req.params.messageId,
-          })
-        }
-        return res.status(500).send({
-          message: "Error retrieving message with id " + req.params.messageId,
-        })
-      })
-  }
 
   // Update a message identified by the messageId in the request
-  const update = (req, res) => {
-    App.findByIdAndUpdate(
-      req.params.messageId,
-      {
-        titulo: req.body.titulo,
-        texto: req.body.texto,
-        tags: req.body.tags,
+  const update = async(req, res) => {
+    const updateUser = await Db.user.update({
+      where: {
+        email: 'alice@prisma.io',
       },
-      { new: true }
-    )
-      .then((data) => {
-        if (!data) {
-          return res.status(404).send({
-            message: "Message not found with id " + req.params.messageId,
-          })
-        }
-        res.send(data)
-      })
-      .catch((err) => {
-        if (err.kind === "ObjectId") {
-          return res.status(404).send({
-            message: "Message not found with id " + req.params.messageId,
-          })
-        }
-        return res.status(500).send({
-          message: "Error updating message with id " + req.params.messageId,
-        })
-      })
+      data: {
+        name: 'Aruã',
+      },
+    }).then(e=>res.send('atualizado')).catch(e=>res.send(e))
   }
 
   // Delete a message with the specified messageId in the request
-  const deleta = (req, res) => {
-    App.findByIdAndRemove(req.params.messageId)
-      .then((data) => {
-        if (!data) {
-          return res.status(404).send({
-            message: "Message not found with id " + req.params.messageId,
-          })
-        }
-        res.send({ message: "Message deleted successfully!" })
-      })
-      .catch((err) => {
-        if (err.kind === "ObjectId" || err.name === "NotFound") {
-          return res.status(404).send({
-            message: "Message not found with id " + req.params.messageId,
-          })
-        }
-        return res.status(500).send({
-          message: "Could not delete message with id " + req.params.messageId,
-        })
-      })
+  const deleta = async (req, res) => {
+    const deleteUser = await Db.user.delete({
+      where: {
+        email: 'alice@prisma.io',
+      },
+    }).then(e=>res.send('deletado')).catch(e=>res.send(e))
   }
 
   return {
     index,
     create,
-    find,
     findOne,
     findAll,
     deleta,
