@@ -6,9 +6,8 @@ export function validateEmail (email){
   return String(email)
 }
 
-let taitou = globalConfig.title
 export function compact(data){
-  return {... data, title: taitou}
+  return {... data, title: globalConfig.title}
 
 }
 export function render(view, data){

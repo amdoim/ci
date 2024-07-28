@@ -5,13 +5,13 @@ import { compact, render, validateEmail } from "../utils/response.helper"
 function AppController(){  
 
   const index = (req, res) => {
-    console.log('[app.controller.index] done')
     let data = {
-      subtitle: 'Início -',
+      subtitle: 'Início',
       tu: 'vossamercerdes',
       eu: 'juniorx'
     }      
-    res.render('index', data)
+    res.render('index', compact(data))
+    console.log('[app.controller.index] done')
   }
 
   const create = async (req, res) => {
