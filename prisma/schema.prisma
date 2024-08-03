@@ -28,6 +28,8 @@ model Post {
 model Profile {
   id     Int     @id @default(autoincrement())
   bio    String?
+  css String?
+  ranking Int
   user   User    @relation(fields: [userId], references: [id])
   userId Int     @unique
 }
@@ -38,4 +40,54 @@ model User {
   name    String?
   posts   Post[]
   profile Profile?
+  role Int
+  active Boolean
+  password String
+  keyTec String
+  cash Decimal
+  debit Decimal
+}
+
+model News{
+  id      Int      @id @default(autoincrement())
+  title String
+  content String
+  active Boolean
+  image String?
+}
+
+
+model Ads {
+  id      Int      @id @default(autoincrement())
+  name String
+  link String
+  image String
+  type Int
+}
+
+model ToDo{
+  id      Int      @id @default(autoincrement())
+  name String
+  link String
+  value Decimal
+}
+
+model TalktoUs{
+  id      Int      @id @default(autoincrement())
+  msg String
+
+}
+
+model Report {
+  id      Int      @id @default(autoincrement())
+  tecReported String
+  msg String
+  image String?
+}
+
+model Reserve{
+  id      Int      @id @default(autoincrement())
+  name String
+  value Decimal
+  new Boolean
 }
