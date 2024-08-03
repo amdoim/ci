@@ -1,10 +1,12 @@
 import express from "express"
 import bodyParser from "body-parser"
-import rotas from "../app/routes/app.routes"
-import es6Renderer from 'express-es6-template-engine'
+import rotas from "./app/routes/app.routes"
 import cors from 'cors'
-import { globalConfig } from "../chinelo.config"
+import { globalConfig } from "./chinelo.config"
+import { engine } from "express-handlebars"
 
+
+//express-handlebars
 
 
 function createServer(){
@@ -12,10 +14,11 @@ function createServer(){
     async function start(){
         
         const app = express()
-        app.engine('html', es6Renderer)
-        app.set('views', './app/views')
-        app.set('view engine', 'html')
-        //app.set('view engine', 'pug')
+      //  app.engine('.hbs', engine({extname: '.hbs'}));
+        app.engine('handlebars',engine())
+        app.set('view engine', 'handlebars')
+        // app.set("views", path.resolve(`${globalConfig.rootPath}`, "./app/views"));
+        app.set('views', `./app/views`)
         app.use(cors())
         app.use(express.static('./public'))
         app.use(bodyParser.urlencoded({ extended: true }))

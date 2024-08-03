@@ -1,4 +1,5 @@
 export const globalConfig = {
     title: 'Dinheirus - D$',
-    port: 80
+    port: 3000, 
+    rootPath: __dirname
 }

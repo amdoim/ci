@@ -1,17 +1,17 @@
 import Db from "../model/app.model"
-import { compact, validateEmail } from "../utils/response.helper"
+import { compact, render, validateEmail } from "../utils/response.helper"
 
 // Create and Save a new Messages
 function AppController(){  
 
   const index = (req, res) => {
-    console.log('[app.controller.index] done')
     let data = {
-      subtitle: 'Início -',
+      subtitle: 'Início',
       tu: 'vossamercerdes',
       eu: 'juniorx'
     }      
-    res.status( 200 ).render('index', compact(data))
+    res.render('index', compact(data))
+    console.log('[app.controller.index] done')
   }
 
   const create = async (req, res) => {
@@ -41,15 +41,12 @@ function AppController(){
   // Retrieve all messages from the database.
   const findAll = async (req, res) => {
     const allUsers = await Db.user.findMany({
-    }).then((response)=>{
-      console.log(response[0])
-      res.render('users', compact(response[0]))
     }).catch((error)=>{
-      res.status(500); res.send(error)
-    }).then(response=>res.send(response)).catch(e=>res.send(e))
+      res.status(500).send(error)
+    }).then(response=>res.render('users', compact(response))).catch(e=>res.send(e))
   }
 
-  // Find a single message with a messageId
+  // Find a single user with a id
   const findOne = async(req, res) => {
     const allUsers = await Db.user.findUnique({
       where: {
@@ -61,11 +58,13 @@ function AppController(){
         email: true
       }
     }).then((response)=>{
+      
       let data = {
         ... response,
-        subtitle: 'Início -'
+        subtitle: 'Perfil -'
       }
-      res.render('users', compact(data))
+      let view = response.id > 0 ? 'users' : 'notfound'
+      res.render(view, compact(data))
     }).catch((error)=>{
       res.status(500).send(error)
     })

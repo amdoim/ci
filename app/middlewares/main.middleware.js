@@ -1,3 +1,6 @@
+
+    let count = 0
 export function main(){
-    console.log('[main.middleware] done')
+    count++
+    console.log('[main.middleware] done ' + count)
 }
