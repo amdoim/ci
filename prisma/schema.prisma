@@ -13,7 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Post {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
@@ -26,68 +25,66 @@ model Post {
 }
 
 model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  css String?
-  ranking Int
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
+  id      Int     @id @default(autoincrement())
+  bio     String?
+  css     String?
+  ranking Int     @default(0)
+  user    User    @relation(fields: [userId], references: [id])
+  userId  Int     @unique
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  posts   Post[]
-  profile Profile?
-  role Int
-  active Boolean
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  name     String
+  posts    Post[]
+  profile  Profile?
+  role     Int      @default(3)
+  active   Boolean  @default(true)
   password String
-  keyTec String
-  cash Decimal
-  debit Decimal
+  keyTec   String   @unique
+  cash     Decimal  @default(0)
+  debit    Decimal  @default(0)
 }
 
-model News{
-  id      Int      @id @default(autoincrement())
-  title String
+model News {
+  id      Int     @id @default(autoincrement())
+  title   String
   content String
-  active Boolean
-  image String?
+  active  Boolean
+  image   String?
 }
-
 
 model Ads {
-  id      Int      @id @default(autoincrement())
-  name String
-  link String
+  id    Int    @id @default(autoincrement())
+  name  String
+  link  String
   image String
-  type Int
+  type  Int
 }
 
-model ToDo{
-  id      Int      @id @default(autoincrement())
-  name String
-  link String
+model ToDo {
+  id    Int     @id @default(autoincrement())
+  name  String
+  link  String
   value Decimal
 }
 
-model TalktoUs{
-  id      Int      @id @default(autoincrement())
+model TalktoUs {
+  id  Int    @id @default(autoincrement())
   msg String
-
 }
 
 model Report {
-  id      Int      @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   tecReported String
-  msg String
-  image String?
+  msg         String
+  image       String?
 }
 
-model Reserve{
-  id      Int      @id @default(autoincrement())
-  name String
+model Reserve {
+  id    Int     @id @default(autoincrement())
+  name  String
   value Decimal
-  new Boolean
+  new   Boolean
 }

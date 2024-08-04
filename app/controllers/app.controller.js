@@ -9,7 +9,7 @@ function AppController(){
       subtitle: 'Início',
       tu: 'vossamercerdes',
       eu: 'juniorx'
-    }      
+    }
     res.render('index', compact(data))
     console.log('[app.controller.index] done')
   }
@@ -21,8 +21,10 @@ function AppController(){
     }
     await Db.user.create({
         data: {
-          name: 'Alice',
-          email: 'alice@prisma.io',
+          name: 'Junior Alves',
+          email: 'junior.alves@dr.com',
+          keyTec: 'jr',
+          password: 'abc',
           posts: {
             create: { title: 'Minha primeira Postagem' },
           },
@@ -34,7 +36,7 @@ function AppController(){
       res.status(200); 
       res.send('success')
     }).catch((e)=>{
-      res.status(500).send({e:e.code})
+      res.status(500).send({e:e})
     })
   }
 
@@ -50,23 +52,25 @@ function AppController(){
   const findOne = async(req, res) => {
     const allUsers = await Db.user.findUnique({
       where: {
-        id: parseInt(req.params.id)
+        keyTec: (req.params.id)
       },
       select: {
-        id: true,
+        keyTec: true,
         name: true,
-        email: true
+        email: true,
+        cash: true,
+        profile: true,
+        role: true
       }
     }).then((response)=>{
-      
+      if(req.query.api==true)res.send(response)
       let data = {
         ... response,
-        subtitle: 'Perfil -'
+        subtitle: 'Perfil - ' + response.name
       }
-      let view = response.id > 0 ? 'users' : 'notfound'
-      res.render(view, compact(data))
+      res.render('users', compact(data))
     }).catch((error)=>{
-      res.status(500).send(error)
+      res.status(404).render('notfound')
     })
   }
 

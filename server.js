@@ -25,7 +25,7 @@ function createServer(){
         app.use(bodyParser.json())
         app.use(rotas)
         app.use( ( req, res, next ) => {
-            res.status( 404 ).render( "notfound" )
+            res.status( 404 ).render( "notfound", {subtitle: '404 - Página não encontrada.', title: globalConfig.title} )
           })
         const PORT =  globalConfig.port || process.env.PORT || 3333
         app.listen(PORT, () => {

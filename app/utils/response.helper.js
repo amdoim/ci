@@ -7,6 +7,7 @@ export function validateEmail (email){
 }
 
 export function compact(data){
+  
   return {... data, title: globalConfig.title}
 
 }
