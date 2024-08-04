@@ -2,7 +2,7 @@ import Db from "../model/app.model"
 import { compact, render, validateEmail } from "../utils/response.helper"
 
 // Create and Save a new Messages
-function AppController(){  
+function userController(){  
 
   const index = (req, res) => {
     let data = {
@@ -48,11 +48,11 @@ function AppController(){
     }).then(response=>res.render('users', compact(response))).catch(e=>res.send(e))
   }
 
-  // Find a single user with a id
+  // Find a single user with a keyTec
   const findOne = async(req, res) => {
     const allUsers = await Db.user.findUnique({
       where: {
-        keyTec: (req.params.id)
+        keyTec: (req.params.keyTec)
       },
       select: {
         keyTec: true,
@@ -60,7 +60,8 @@ function AppController(){
         email: true,
         cash: true,
         profile: true,
-        role: true
+        role: true,
+        ranking: true
       }
     }).then((response)=>{
       if(req.query.api==true)res.send(response)
@@ -95,6 +96,24 @@ function AppController(){
     }).then(e=>res.send('deletado')).catch(e=>res.send(e))
   }
 
+  const rankingPlus = async (req,res) => {
+    let value = parseInt(req.query.value) || 10
+    value = value > 999 ? 1000 : value
+    value = value < -999 ? -1000 : value
+    await Db.user.updateMany({
+      where:{
+        keyTec: 'atec' 
+      },
+      data: {
+        ranking: {
+          increment: value,
+        }      
+      },
+    })
+
+    res.send('1')
+  }
+
   return {
     index,
     create,
@@ -102,8 +121,9 @@ function AppController(){
     findAll,
     deleta,
     update,
+    rankingPlus
   }
   
 }
 
-export default AppController()
+export default userController()
