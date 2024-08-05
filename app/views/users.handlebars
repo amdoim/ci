@@ -1,7 +1,20 @@
-<p>
-    olá {{{name}}}, seja bem vind@!
-</p>
+
     <p>{{{email}}}</p>
-    <p>{{{name}}} - Chave TeC :<b><a href="{{{url}}}/{{{keyTec}}}">{{{keyTec}}}</a></b></p>
-    <p>Ranking: {{{ranking}}}</p>
-    <p>Saldo: {{{cash}}}</p>
+    <p>{{{name}}} - Chave TeC :<b><a href="{{{url}}}/{{{keyTec}}}"></a></b></p>
+
+      <div class="profile-card">
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <img src="" alt="Profile Image" class="profile-image" id="profile-image">
+    </div>
+    <label for="image-input" id="image-label">Foto</label>
+    <input type="file" id="image-input" accept="image/*" onchange="updateProfileImage(this.files[0])">
+    <h1 id="name">{{{name}}}</h1>
+    <p>Chave TeC: <b>{{{keyTec}}}</b></p>
+    <p>Saldo: <b>{{{cash}}}</b></p>
+    <p>Ranking: <b>{{{ranking}}}</b></p>
+    <p>Bio: <b>{{{profile.bio}}}</b></p>
+    <p>Turma: <input type="text" id="class-input" value="A"></p>
+    <p>Turno: <input type="text" id="shift-input" value="Manhã"></p>
+    <p>Série: <input type="text" id="grade-input" value="8ª"></p>
+    <button id="update-button">Atualizar</button>
+  </div>
