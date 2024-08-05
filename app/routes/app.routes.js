@@ -1,7 +1,6 @@
 import express from 'express'
-import AppController from "../controllers/app.controller.js"
+import userController from "../controllers/app.controller.js"
 import { main } from '../middlewares/main.middleware.js'
-
 
 const router = express.Router()
 
@@ -10,22 +9,18 @@ router.use(function (req, res, next) {
     next()
   })
 
-router.get("/", AppController.index)
+router.get("/", userController.index)
 
-router.get("/pgx", AppController.create);
+router.get("/x", userController.create);
+router.get("/r", userController.rankingPlus);
 
-router.get("/pg", AppController.findAll);
+router.get("/pg", userController.findAll);
 
-router.get("/pgid/:id", AppController.findOne);
+router.get("/@:keyTec", userController.findOne);
+router.get("/:keyTec", userController.findOne)
 
+router.get("/pgd/:id", userController.update); //put
 
-
-// router.get("/pg/:nomeGiria", AppController.find);
-
-// router.get("/pg/q/:messageId", AppController.find);
-
-router.get("/pgd/:id", AppController.update); //put
-
-router.get("/pgde/", AppController.deleta) //delete
+router.get("/pgde/", userController.deleta) //delete
 
 export default router

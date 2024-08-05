@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Profile` MODIFY `ranking` INTEGER NOT NULL DEFAULT 0;
