@@ -47,6 +47,7 @@ function userController(){
   }
 
   // Retrieve all messages from the database.
+  
   const findAll = async (req, res) => {
     const allUsers = await Db.user.findMany({
     }).catch((error)=>{
