@@ -1,17 +1,9 @@
-import Mustache from "mustache"
-import { globalConfig } from "../../chinelo.config"
+import { globalConfig } from "../../chinelo.config";
 
-
-export function validateEmail (email){
-  return String(email)
+export function validateEmail(email) {
+  return String(email);
 }
 
-export function compact(data){
-  
-  return {... data, title: globalConfig.title, url: globalConfig.mainUrl}
-
-}
-export function render(view, data){
-
- 
+export function compact(data) {
+  return { ...data, title: globalConfig.title, url: globalConfig.mainUrl };
 }
