@@ -1,126 +1,142 @@
-import Db from "../model/app.model"
-import { compact, render, validateEmail } from "../utils/response.helper"
+import Db from "../model/app.model";
+import { compact } from "../utils/response.helper";
 
 // Create and Save a new Messages
-function userController(){  
-
+function userController() {
   const index = (req, res) => {
     let data = {
-      subtitle: 'Início',
-      tu: 'vossamercerdes',
-      eu: 'juniorx'
-    }
-    res.render('index', compact(data))
-    console.log('[app.controller.index] done')
-  }
+      subtitle: "Início",
+      tu: "vossamercerdes",
+      eu: "juniorx",
+    };
+    res.render("index", compact(data));
+    console.log("[app.controller.index] done");
+  };
 
   const create = async (req, res) => {
     const data = {
-      name: req.body.name,
-      email: req.body.email
-    }
-    await Db.user.create({
+      name: req.body.name || "Junior Alves",
+      email: req.body.email || "junior.alvesxxxx@dr.com",
+      keyTec: req.body.email || "j",
+      password: req.body.email || "abc",
+      className: req.body.email || "2a",
+      classShift: req.body.email || "Matutino",
+      profileBio: req.body.email || "Sou novo aqui, Olá!",
+    };
+    await Db.user
+      .create({
         data: {
-          name: 'Junior Alves',
-          email: 'junior.alvesxxxx@dr.com',
-          keyTec: 'j',
-          password: 'abc',
+          name: data.name,
+          email: data.email,
+          keyTec: data.keyTec,
+          password: data.password,
           class: {
-            create: { 
-              name: '2a',
-              shift: 'Matutino'
+            create: {
+              name: data.className,
+              shift: data.classShift,
             },
           },
-          posts: {
-            create: { title: 'Minha primeira Postagem' },
-          },
           profile: {
-            create: { bio: 'Sou novo aqui, Olá!' },
+            create: { bio: data.profileBio },
           },
         },
-      }).then(()=>{
-      res.status(200); 
-      res.send('success')
-    }).catch((e)=>{
-      res.status(500).send({e:e})
-    })
-  }
+      })
+      .then(() => {
+        res.status(200);
+        res.send("success");
+      })
+      .catch((e) => {
+        res.status(500).send({ e: e });
+      });
+  };
 
   // Retrieve all messages from the database.
-  
+
   const findAll = async (req, res) => {
-    const allUsers = await Db.user.findMany({
-    }).catch((error)=>{
-      res.status(500).send(error)
-    }).then(response=>res.render('users', compact(response))).catch(e=>res.send(e))
-  }
+    await Db.user
+      .findMany({})
+      .catch((error) => {
+        res.status(500).send(error);
+      })
+      .then((response) => res.render("users", compact(response)))
+      .catch((e) => res.send(e));
+  };
 
   // Find a single user with a keyTec
-  const findOne = async(req, res) => {
-    const allUsers = await Db.user.findUnique({
-      where: {
-        keyTec: (req.params.keyTec)
-      },
-      select: {
-        keyTec: true,
-        name: true,
-        email: true,
-        cash: true,
-        profile: true,
-        class: true,
-        role: true,
-        ranking: true
-      }
-    }).then((response)=>{
-      if(req.query.api==true)res.send(response)
-      let data = {
-        ... response,
-        subtitle: 'Perfil - ' + response.name
-      }
-      res.render('users', compact(data))
-    }).catch((error)=>{
-      res.status(404).render('notfound')
-    })
-  }
+  const findOne = async (req, res) => {
+    await Db.user
+      .findUnique({
+        where: {
+          keyTec: req.params.keyTec,
+        },
+        select: {
+          keyTec: true,
+          name: true,
+          email: true,
+          cash: true,
+          profile: true,
+          class: true,
+          role: true,
+          ranking: true,
+        },
+      })
+      .then((response) => {
+        if (req.query.api == true) res.send(response);
+        let data = {
+          ...response,
+          subtitle: "Perfil - " + response.name,
+        };
+        res.render("users", compact(data));
+      })
+      .catch((error) => {
+        res.status(404).render("notfound" + error);
+      });
+  };
 
   // Update a message identified by the messageId in the request
-  const update = async(req, res) => {
-    const updateUser = await Db.user.update({
-      where: {
-        email: 'alice@prisma.io',
-      },
-      data: {
-        name: 'Aruã',
-      },
-    }).then(e=>res.send('atualizado')).catch(e=>res.send(e))
-  }
+  const update = async (req, res) => {
+    await Db.user
+      .update({
+        where: {
+          email: "alice@prisma.io",
+        },
+        data: {
+          name: "Aruã",
+        },
+      })
+      .then(() => res.send("atualizado"))
+      .catch((e) => res.send(e));
+  };
 
   // Delete a message with the specified messageId in the request
   const deleta = async (req, res) => {
-    const deleteUser = await Db.user.delete({
-      where: {
-        email: 'alice@prisma.io',
-      },
-    }).then(e=>res.send('deletado')).catch(e=>res.send(e))
-  }
+    await Db.user
+      .delete({
+        where: {
+          email: "alice@prisma.io",
+        },
+      })
+      .then(() => res.send("deletado"))
+      .catch((e) => res.send(e));
+  };
 
-  const rankingPlus = async (req,res) => {
-    let value = parseInt(req.query.value) || 10
-    value = value > 999 ? 1000 : value
-    value = value < -999 ? -1000 : value
+  const rankingPlus = async (req, res) => {
+    let value = parseInt(req.query.value) || 10;
+    value = value > 999 ? 1000 : value;
+    value = value < -999 ? -1000 : value;
     await Db.user.updateMany({
-      where:{
-        keyTec: 'atec' 
+      where: {
+        keyTec: "atec",
       },
       data: {
         ranking: {
           increment: value,
-        }      
+        },
       },
-    })
+    });
 
-    res.send('1')
-  }
+    res.send("1");
+  };
 
   return {
     index,
@@ -129,9 +145,8 @@ function userController(){
     findAll,
     deleta,
     update,
-    rankingPlus
-  }
-  
+    rankingPlus,
+  };
 }
 
-export default userController()
+export default userController();
