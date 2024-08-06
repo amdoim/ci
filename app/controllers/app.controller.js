@@ -10,6 +10,7 @@ function userController() {
       eu: "juniorx",
     };
     res.render("index", compact(data));
+
     console.log("[app.controller.index] done");
   };
 

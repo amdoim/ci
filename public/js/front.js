@@ -1,5 +1,5 @@
 function joe(it = "done") {
-  alert(it);
+  return it;
 }
 
 joe();
