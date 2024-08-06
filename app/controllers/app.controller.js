@@ -22,9 +22,15 @@ function userController(){
     await Db.user.create({
         data: {
           name: 'Junior Alves',
-          email: 'junior.alves@dr.com',
-          keyTec: 'jr',
+          email: 'junior.alvesxxxx@dr.com',
+          keyTec: 'j',
           password: 'abc',
+          class: {
+            create: { 
+              name: '2a',
+              shift: 'Matutino'
+            },
+          },
           posts: {
             create: { title: 'Minha primeira Postagem' },
           },
@@ -60,6 +66,7 @@ function userController(){
         email: true,
         cash: true,
         profile: true,
+        class: true,
         role: true,
         ranking: true
       }

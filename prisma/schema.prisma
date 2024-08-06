@@ -38,6 +38,7 @@ model User {
   name     String
   posts    Post[]
   profile  Profile?
+  class    Classes?
   ranking  Int      @default(0)
   role     Int      @default(3)
   active   Boolean  @default(true)
@@ -87,4 +88,18 @@ model Reserve {
   name  String
   value Decimal
   new   Boolean
+}
+
+model Classes {
+  id     Int    @id @default(autoincrement())
+  name   String
+  shift  Shift
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int    @unique
+}
+
+enum Shift {
+  Matutino
+  Vespertino
+  Noturno
 }
