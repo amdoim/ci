@@ -2,7 +2,7 @@ import Db from "../model/app.model"
 import { compact, render, validateEmail } from "../utils/response.helper"
 
 // Create and Save a new Messages
-function userController(){  
+function userController(){
 
   const index = (req, res) => {
     let data = {
@@ -33,7 +33,7 @@ function userController(){
           },
         },
       }).then(()=>{
-      res.status(200); 
+      res.status(200)
       res.send('success')
     }).catch((e)=>{
       res.status(500).send({e:e})
@@ -102,12 +102,12 @@ function userController(){
     value = value < -999 ? -1000 : value
     await Db.user.updateMany({
       where:{
-        keyTec: 'atec' 
+        keyTec: 'atec'
       },
       data: {
         ranking: {
           increment: value,
-        }      
+        }
       },
     })
 
@@ -123,7 +123,7 @@ function userController(){
     update,
     rankingPlus
   }
-  
+
 }
 
 export default userController()
