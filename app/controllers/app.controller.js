@@ -102,7 +102,7 @@ function userController(){
     value = value < -999 ? -1000 : value
     await Db.user.updateMany({
       where:{
-        keyTec: 'atec'
+        keyTec: req.query.tec || 'jr'
       },
       data: {
         ranking: {
