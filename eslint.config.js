@@ -10,7 +10,7 @@ export default [
   {
     files: ["app/**/*.js"],
     rules: {
-        "no-trailing-spaces": "error",
+        "no-trailing-spaces": ["error", { "ignoreComments": true }],
         semi: ["error", "never"]
     }
 },
