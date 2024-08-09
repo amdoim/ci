@@ -5,7 +5,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "l": "bun eslint",
+=======
+    "l": "bun eslint --fix",
+>>>>>>> eslint
     "dev": "bun --hot index.js"
   },
   "author": "umruivo",

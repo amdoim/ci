@@ -2,7 +2,12 @@ import Db from "../model/app.model";
 import { compact } from "../utils/response.helper";
 
 // Create and Save a new Messages
+<<<<<<< HEAD
 function userController() {
+=======
+function userController(){
+
+>>>>>>> eslint
   const index = (req, res) => {
     let data = {
       subtitle: "Início",
@@ -40,6 +45,7 @@ function userController() {
             create: { bio: data.profileBio },
           },
         },
+<<<<<<< HEAD
       })
       .then(() => {
         res.status(200);
@@ -49,6 +55,15 @@ function userController() {
         res.status(500).send({ e: e });
       });
   };
+=======
+      }).then(()=>{
+      res.status(200)
+      res.send('success')
+    }).catch((e)=>{
+      res.status(500).send({e:e})
+    })
+  }
+>>>>>>> eslint
 
   // Retrieve all messages from the database.
 
@@ -125,13 +140,22 @@ function userController() {
     value = value > 999 ? 1000 : value;
     value = value < -999 ? -1000 : value;
     await Db.user.updateMany({
+<<<<<<< HEAD
       where: {
         keyTec: "atec",
+=======
+      where:{
+        keyTec: req.query.tec || 'jr'
+>>>>>>> eslint
       },
       data: {
         ranking: {
           increment: value,
+<<<<<<< HEAD
         },
+=======
+        }
+>>>>>>> eslint
       },
     });
 
@@ -145,8 +169,14 @@ function userController() {
     findAll,
     deleta,
     update,
+<<<<<<< HEAD
     rankingPlus,
   };
+=======
+    rankingPlus
+  }
+
+>>>>>>> eslint
 }
 
 export default userController();
