@@ -15,7 +15,6 @@ export function Core(){
 
     function stop(){
         console.log('[core]done')
-        //bd.stop()
     }
 
     return {
@@ -23,5 +22,3 @@ export function Core(){
         stop
     }
 }
-
-//export default createCore
