@@ -8,7 +8,7 @@ VOLUME /dineirus/
 
 EXPOSE 3000
 
-ENV API_BANCO="meu_site"
+ENV NODE_ENV="prod"
 
 WORKDIR /dineirus/
 
