@@ -5,19 +5,13 @@ import cors from 'cors'
 import { globalConfig } from "./chinelo.config"
 import { engine } from "express-handlebars"
 
-
-//express-handlebars
-
-
 function createServer(){
 
     async function start(){
         
         const app = express()
-      //  app.engine('.hbs', engine({extname: '.hbs'}));
         app.engine('handlebars',engine())
         app.set('view engine', 'handlebars')
-        // app.set("views", path.resolve(`${globalConfig.rootPath}`, "./app/views"));
         app.set('views', `./app/views`)
         app.use(cors())
         app.use(express.static('./public'))
