@@ -6,3 +6,12 @@ export const globalConfig = {
     mainUrl: url,
     rootPath: __dirname
 }
+
+/**
+ * sudo docker image build -t umruivo/dinheirus:0.1.1 .
+ * sudo docker push umruivo/dinheirus:0.1.1
+ * 
+ * 
+ * 
+ * 
+ */
