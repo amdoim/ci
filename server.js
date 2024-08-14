@@ -4,6 +4,9 @@ import rotas from "./app/routes/app.routes"
 import cors from 'cors'
 import { globalConfig } from "./chinelo.config"
 import { engine } from "express-handlebars"
+import session from "express-session"
+
+const sec = process.env.DATABASE_URL
 
 function createServer(){
 
@@ -14,6 +17,7 @@ function createServer(){
         app.set('view engine', 'handlebars')
         app.set('views', `./app/views`)
         app.use(cors())
+        app.use(session({ secret: sec, cookie: { maxAge: globalConfig.maxAge }}))
         app.use(express.static('./public'))
         app.use(bodyParser.urlencoded({ extended: true }))
         app.use(bodyParser.json())

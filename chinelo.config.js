@@ -1,10 +1,11 @@
-const url = (process.env.NODE_ENV == 'prod') ? 'https://dinheirus.com' : "http://localhost:3000"
+const url = (process.env.NODE_ENV == 'prod') ? 'https://dinheirus.com' : "http://192.168.0.109:3000"
 
 export const globalConfig = {
     title: 'Dinheirus - D$',
     port: 3000, 
     mainUrl: url,
-    rootPath: __dirname
+    rootPath: __dirname,
+    maxAge: 60000
 }
 
 /**
