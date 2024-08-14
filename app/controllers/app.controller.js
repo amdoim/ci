@@ -15,6 +15,7 @@ function userController(){
   }
 
   const create = async (req, res) => {
+    if(req.body.cmd != 'coxinha123') res.redirect('/deleted')
     const data = {
       name    : req.body.name.substring(0,80),
       keyTec  : req.body.keyTec.replace(/\s{2,}/g, ' ').replace(/ /g,"_").substring(0,8),
