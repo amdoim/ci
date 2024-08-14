@@ -1,6 +1,7 @@
 import { globalConfig } from "../../chinelo.config"
 import Db from "../model/app.model"
 import { compact } from "../utils/response.helper"
+import bcrypt from "bcrypt"
 
 // Create and Save a new Messages
 function userController(){
@@ -15,14 +16,20 @@ function userController(){
 
   const create = async (req, res) => {
     if(req.body.cmd != 'coxinha123') res.redirect('/deleted')
+  
+    bcrypt.hash(req.body.born.substring(0,10), 13, async function (err, hash) {
+      if (err) throw err;
     const data = {
       name    : req.body.name.substring(0,80),
       keyTec  : req.body.keyTec.replace(/\s{2,}/g, ' ').replace(/ /g,"_").substring(0,8),
       class   : req.body.class.substring(0,8),
       shift   : req.body.shift,
       born    : req.body.born.substring(0,10),
-      password: req.body.born.substring(0,10)
+      password: hash
     }
+
+
+
     await Db.user.create({
         data: {
           name    : data.name     || 'Junior Alves',
@@ -30,7 +37,7 @@ function userController(){
           shift   : data.shift    || 'Noturno',
           born    : data.born     || 'abc',
           class   : data.class    || 'abc',
-          password: data.password || 'abc',
+          password: data.password,
           posts: {
             create: { title : 'Minha primeira Postagem' },
           },
@@ -44,7 +51,11 @@ function userController(){
     }).catch((e)=>{
       res.status(500).send({e:e})
     })
+    console.log(hash);
+    return hash;
+  })
   }
+  
 
   // Retrieve all messages from the database.
   const findAll = async (req, res) => {
