@@ -17,7 +17,7 @@ function userController(){
   const create = async (req, res) => {
     const data = {
       name    : req.body.name.substring(0,80),
-      keyTec  : req.body.keyTec.trim().replace(/ /g,"_").substring(0,8),
+      keyTec  : req.body.keyTec.replace(/\s{2,}/g, ' ').replace(/ /g,"_").substring(0,8),
       class   : req.body.class.substring(0,8),
       shift   : req.body.shift,
       born    : req.body.born.substring(0,10),
