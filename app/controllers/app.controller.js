@@ -16,12 +16,12 @@ function userController(){
 
   const create = async (req, res) => {
     const data = {
-      name    : req.body.name,
-      keyTec  : req.body.keyTec,
-      class   : req.body.class,
+      name    : req.body.name.substring(0,80),
+      keyTec  : req.body.keyTec.trim().replace(/ /g,"_").substring(0,8),
+      class   : req.body.class.substring(0,8),
       shift   : req.body.shift,
-      born    : req.body.born,
-      password: req.body.born
+      born    : req.body.born.substring(0,10),
+      password: req.body.born.substring(0,10)
     }
     await Db.user.create({
         data: {
@@ -32,15 +32,15 @@ function userController(){
           class   : data.class    || 'abc',
           password: data.password || 'abc',
           posts: {
-            create: { title: 'Minha primeira Postagem' },
+            create: { title : 'Minha primeira Postagem' },
           },
           profile: {
-            create: { bio: 'Sou novo aqui, Olá!' },
+            create: { bio   : 'Sou novo aqui, Olá!' },
           },
         },
       }).then(()=>{
       res.status(200)
-      res.send('success')
+      res.redirect(data.keyTec)
     }).catch((e)=>{
       res.status(500).send({e:e})
     })
@@ -63,7 +63,6 @@ function userController(){
       select: {
         keyTec: true,
         name: true,
-        email: true,
         cash: true,
         profile: true,
         role: true,
