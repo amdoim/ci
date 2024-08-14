@@ -34,14 +34,16 @@ model Profile {
 
 model User {
   id       Int      @id @default(autoincrement())
-  email    String   @unique
   name     String
   posts    Post[]
   profile  Profile?
   ranking  Int      @default(0)
   role     Int      @default(3)
   active   Boolean  @default(true)
+  shift    Shift
+  class    String
   password String
+  born     String
   keyTec   String   @unique
   cash     Decimal  @default(0)
   debit    Decimal  @default(0)
@@ -87,4 +89,10 @@ model Reserve {
   name  String
   value Decimal
   new   Boolean
+}
+
+enum Shift {
+  Matutino
+  Vespertino
+  Noturno
 }

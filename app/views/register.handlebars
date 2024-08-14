@@ -1,0 +1,32 @@
+<form action="{{{url}}}/register" method="post">
+  <div class="container">
+    <h1>Cadastrar usuário</h1>
+    <p>Criar as contas do Dinheirus</p>
+    <hr>
+
+    <label class="w3-text-black" for="name"><b>Nome do usuário</b></label><br>
+    <input class="w3-input w3-border"  maxlength="80" minlength="4" type="text" name="name" required ><br>
+
+    <label class="w3-text-black" for="keyTec"><b>Chave TeC</b></label><br>
+    <input class="w3-input w3-border" maxlength="8"  minlength="2" type="text" name="keyTec" required ><br>
+
+    <label class="w3-text-black" for="class"><b>Turma</b></label><br>
+    <input class="w3-input w3-border" type="text"  maxlength="8"  minlength="2" name="class" required ><br>
+
+    <label class="w3-text-black" for="shift"><b>Turno</b></label><br>
+    <select class="w3-select w3-border" name="shift" >
+        <option value="Matutino">Matutino</option>
+        <option value="Vespertino">Vespertino</option>
+        <option value="Noturno">Noturno</option>
+    </select><br><br>
+
+    <label class="w3-text-black" for="born"><b>Data de nascimento</b></label><br>
+    <input class="w3-input w3-border" type="date" name="born" required ><br>
+
+
+    <hr>
+
+    <button type="submit" class="w3-button w3-block w3-black w3-large w3-hover-dark-gray">Register</button>
+  </div>
+  
+</form>

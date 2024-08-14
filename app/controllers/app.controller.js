@@ -16,15 +16,21 @@ function userController(){
 
   const create = async (req, res) => {
     const data = {
-      name: req.body.name,
-      email: req.body.email
+      name    : req.body.name,
+      keyTec  : req.body.keyTec,
+      class   : req.body.class,
+      shift   : req.body.shift,
+      born    : req.body.born,
+      password: req.body.born
     }
     await Db.user.create({
         data: {
-          name: 'Junior Alves',
-          email: 'junior.alves@dr.com',
-          keyTec: 'jr',
-          password: 'abc',
+          name    : data.name     || 'Junior Alves',
+          keyTec  : data.keyTec   || 'jr',
+          shift   : data.shift    || 'Noturno',
+          born    : data.born     || 'abc',
+          class   : data.class    || 'abc',
+          password: data.password || 'abc',
           posts: {
             create: { title: 'Minha primeira Postagem' },
           },
@@ -71,7 +77,7 @@ function userController(){
       }
       res.render('users', compact(data))
     }).catch((error)=>{
-      res.status(404).render('notfound')
+      res.status(404).render('notfound', compact({subtitle: "Página não encontrada!"}))
     })
   }
 

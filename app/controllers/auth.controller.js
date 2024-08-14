@@ -1,11 +1,24 @@
 import express from "express"
+import { compact } from "../utils/response.helper"
 
-export default function Auth(){
-    const Login = async (req, res) => {
+function Auth(){
+    const login = async (req, res) => {
         res.send('asdf')
     }
 
+    const register = async (req, res) => {
+        const data = {
+            subtitle: "Cadastrar Usuário"
+        }
+       return res.render('register', compact(data))
+    }
+
+
+
     return {
-        Login
+        login,
+        register
     }
 }
+
+export default Auth()
