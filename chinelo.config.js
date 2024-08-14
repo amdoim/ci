@@ -8,8 +8,8 @@ export const globalConfig = {
 }
 
 /**
- * sudo docker image build -t umruivo/dinheirus:0.1.1 .
- * sudo docker push umruivo/dinheirus:0.1.1
+ * sudo docker image build -t umruivo/dinheirus:0.1.31 .
+ * sudo docker push umruivo/dinheirus:0.1.31
  * 
  * 
  * 
