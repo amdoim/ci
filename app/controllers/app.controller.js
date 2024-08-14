@@ -1,6 +1,6 @@
 import { globalConfig } from "../../chinelo.config"
 import Db from "../model/app.model"
-import { compact, render, validateEmail } from "../utils/response.helper"
+import { compact } from "../utils/response.helper"
 
 // Create and Save a new Messages
 function userController(){
@@ -11,7 +11,6 @@ function userController(){
       texto: globalConfig.textInicio
     }
     res.render('index', compact(data))
-    console.log('[app.controller.index] done')
   }
 
   const create = async (req, res) => {
@@ -49,7 +48,7 @@ function userController(){
 
   // Retrieve all messages from the database.
   const findAll = async (req, res) => {
-    const allUsers = await Db.user.findMany({
+    await Db.user.findMany({
     }).catch((error)=>{
       res.status(500).send(error)
     }).then(response=>res.render('users', compact(response))).catch(e=>res.send(e))
@@ -57,7 +56,7 @@ function userController(){
 
   // Find a single user with a keyTec
   const findOne = async(req, res) => {
-    const allUsers = await Db.user.findUnique({
+    await Db.user.findUnique({
       where: {
         keyTec: (req.params.keyTec)
       },
@@ -76,30 +75,30 @@ function userController(){
         subtitle: 'Perfil - ' + response.name
       }
       res.render('users', compact(data))
-    }).catch((error)=>{
+    }).catch(()=>{
       res.status(404).render('notfound', compact({subtitle: "Página não encontrada!"}))
     })
   }
 
   // Update a message identified by the messageId in the request
   const update = async(req, res) => {
-    const updateUser = await Db.user.update({
+    await Db.user.update({
       where: {
         email: 'alice@prisma.io',
       },
       data: {
         name: 'Aruã',
       },
-    }).then(e=>res.send('atualizado')).catch(e=>res.send(e))
+    }).then(()=>res.send('atualizado')).catch(e=>res.send(e))
   }
 
   // Delete a message with the specified messageId in the request
   const deleta = async (req, res) => {
-    const deleteUser = await Db.user.delete({
+    await Db.user.delete({
       where: {
         email: 'alice@prisma.io',
       },
-    }).then(e=>res.send('deletado')).catch(e=>res.send(e))
+    }).then(()=>res.send('deletado')).catch(e=>res.send(e))
   }
 
   const rankingPlus = async (req,res) => {
