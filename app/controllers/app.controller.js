@@ -1,3 +1,4 @@
+import { globalConfig } from "../../chinelo.config"
 import Db from "../model/app.model"
 import { compact, render, validateEmail } from "../utils/response.helper"
 
@@ -7,8 +8,7 @@ function userController(){
   const index = (req, res) => {
     let data = {
       subtitle: 'Início',
-      tu: 'vossamercerdes',
-      eu: 'juniorx'
+      texto: globalConfig.textInicio
     }
     res.render('index', compact(data))
     console.log('[app.controller.index] done')
