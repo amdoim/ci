@@ -19,41 +19,39 @@ function userController(){
   
     bcrypt.hash(req.body.born.substring(0,10), 13, async function (err, hash) {
       if (err) throw err;
-    const data = {
-      name    : req.body.name.substring(0,80),
-      keyTec  : req.body.keyTec.replace(/\s{2,}/g, ' ').replace(/ /g,"_").substring(0,8),
-      class   : req.body.class.substring(0,8),
-      shift   : req.body.shift,
-      born    : req.body.born.substring(0,10),
-      password: hash
-    }
+      const data = {
+        name    : req.body.name.substring(0,80),
+        keyTec  : req.body.keyTec.replace(/\s{2,}/g, ' ').replace(/ /g,"_").substring(0,8),
+        class   : req.body.class.substring(0,8),
+        shift   : req.body.shift,
+        born    : req.body.born.substring(0,10),
+        password: hash
+      }
 
-
-
-    await Db.user.create({
-        data: {
-          name    : data.name     || 'Junior Alves',
-          keyTec  : data.keyTec   || 'jr',
-          shift   : data.shift    || 'Noturno',
-          born    : data.born     || 'abc',
-          class   : data.class    || 'abc',
-          password: data.password,
-          posts: {
-            create: { title : 'Minha primeira Postagem' },
+      await Db.user.create({
+          data: {
+            name    : data.name     || 'Junior Alves',
+            keyTec  : data.keyTec   || 'jr',
+            shift   : data.shift    || 'Noturno',
+            born    : data.born     || 'abc',
+            class   : data.class    || 'abc',
+            password: data.password,
+            posts: {
+              create: { title : 'Minha primeira Postagem' },
+            },
+            profile: {
+              create: { bio   : 'Sou novo aqui, Olá!' },
+            },
           },
-          profile: {
-            create: { bio   : 'Sou novo aqui, Olá!' },
-          },
-        },
-      }).then(()=>{
-      res.status(200)
-      res.redirect(data.keyTec)
-    }).catch((e)=>{
-      res.status(500).send({e:e})
+        }).then(()=>{
+        res.status(200)
+        res.redirect(data.keyTec)
+      }).catch((e)=>{
+        res.status(500).send({e:e})
+      })
+      console.log(hash)
+      return hash
     })
-    console.log(hash);
-    return hash;
-  })
   }
   
 
