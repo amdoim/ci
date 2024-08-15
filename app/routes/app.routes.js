@@ -17,7 +17,7 @@ router.post("/register", userController.create)
 router.get("/x", userController.create)
 router.get("/r", userController.rankingPlus)
 
-router.get("/pg", userController.findAll)
+router.get("/allusers", userController.findAll)
 
 router.get("/@:keyTec", userController.findOne)
 router.get("/:keyTec", userController.findOne)

@@ -58,12 +58,22 @@ function userController(){
   // Retrieve all messages from the database.
   const findAll = async (req, res) => {
     await Db.user.findMany({
+      where: {
+        active: (req.query.active || true)
+      },
+      orderBy: [
+        {
+          ranking: 'desc'
+        }
+      ]
     }).catch((error)=>{
       res.status(500).send(error)
-    }).then(response=>res.render('users', compact(response))).catch(e=>res.send(e))
+    }).then(response=>{
+      res.render('listusers', compact({data:response, subtitle: 'Listando usuários'}))
+    }).catch(e=>res.send(e))
   }
 
-  // Find a single user with a keyTec
+ 
   const findOne = async(req, res) => {
     await Db.user.findUnique({
       where: {
@@ -89,7 +99,6 @@ function userController(){
     })
   }
 
-  // Update a message identified by the messageId in the request
   const update = async(req, res) => {
     await Db.user.update({
       where: {
