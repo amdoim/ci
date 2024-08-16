@@ -112,9 +112,10 @@ function userController(){
 
   // Delete a message with the specified messageId in the request
   const deleta = async (req, res) => {
+
     await Db.user.delete({
       where: {
-        email: 'alice@prisma.io',
+        keyTec: req.params.keyTec.replace(/\s{2,}/g, ' ').replace(/ /g,"_").substring(0,8)
       },
     }).then(()=>res.send('deletado')).catch(e=>res.send(e))
   }

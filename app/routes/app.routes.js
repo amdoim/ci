@@ -24,6 +24,6 @@ router.get("/:keyTec", userController.findOne)
 
 router.get("/pgd/:id", userController.update) //put
 
-router.get("/pgde/", userController.deleta) //delete
+router.get("/allusers/del@:keyTec", userController.deleta) //delete
 
 export default router
