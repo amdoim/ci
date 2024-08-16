@@ -1,3 +1,23 @@
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    function del (id){
+        if(confirm('ctz?')){
+            axios.delete(`/allusers/del@${id}`)
+                .then(function (response) {
+                    alert('Excluído com sucesso.')
+                    location.reload()
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    alert('Aconteceu algum erro.')
+                    console.log(error);
+                });
+        }
+        return false
+    }
+</script>
+
 <h1>
     Listando usuários
 </h1>
@@ -8,6 +28,6 @@
             <a href="{{{url}}}/@{{{keyTec}}}">{{{keyTec}}}</a>
         </b> |
     turno: {{{shift}}} | turma: {{{class}}} | ranking: {{{ranking}}} | multa: {{{debit}}} | D$: {{{cash}}} |
-     <a href="{{{url}}}/allusers/del@{{{keyTec}}}" onclick="if(confirm('ctz?'))return true; return false" target="_blank">DEL</a> |
+     <a href="#" onclick="del('{{{keyTec}}}')">DEL</a> |
      <a href="{{{url}}}/allusers/edit@{{{keyTec}}}" onclick="if(confirm('ctz?'))return true; return false" target="_blank">EDIT</a>
 {{/data}}

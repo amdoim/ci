@@ -11,19 +11,18 @@ router.use(function (req, res, next) {
   })
 
 router.get("/", userController.index)
+
 router.get("/register", authController.register)
 router.post("/register", userController.create)
 
-router.get("/x", userController.create)
 router.get("/r", userController.rankingPlus)
 
 router.get("/allusers", userController.findAll)
 
 router.get("/@:keyTec", userController.findOne)
-router.get("/:keyTec", userController.findOne)
 
-router.get("/pgd/:id", userController.update) //put
+router.get("/allusers/edit@:keyTec", userController.update) //put
 
-router.get("/allusers/del@:keyTec", userController.deleta) //delete
+router.delete("/allusers/del@:keyTec", userController.deleta) 
 
 export default router

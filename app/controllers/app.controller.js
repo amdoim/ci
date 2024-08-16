@@ -45,7 +45,7 @@ function userController(){
           },
         }).then(()=>{
         res.status(200)
-        res.redirect(data.keyTec)
+        res.redirect('@'+data.keyTec)
       }).catch((e)=>{
         res.status(500).send({e:e})
       })
