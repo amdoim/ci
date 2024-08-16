@@ -1,6 +1,6 @@
 import { globalConfig } from "../../chinelo.config"
 import Db from "../model/app.model"
-import { compact } from "../utils/response.helper"
+import { clear, compact } from "../utils/response.helper"
 import bcrypt from "bcrypt"
 
 // Create and Save a new Messages
@@ -21,7 +21,7 @@ function userController(){
       if (err) throw err;
       const data = {
         name    : req.body.name.substring(0,80),
-        keyTec  : req.body.keyTec.replace(/\s{2,}/g, ' ').replace(/ /g,"_").substring(0,8),
+        keyTec  : clear(req.body.keyTec),
         class   : req.body.class.substring(0,8),
         shift   : req.body.shift,
         born    : req.body.born.substring(0,10),
@@ -49,7 +49,6 @@ function userController(){
       }).catch((e)=>{
         res.status(500).send({e:e})
       })
-      console.log(hash)
       return hash
     })
   }
@@ -77,7 +76,7 @@ function userController(){
   const findOne = async(req, res) => {
     await Db.user.findUnique({
       where: {
-        keyTec: (req.params.keyTec)
+        keyTec: (clear(req.params.keyTec))
       },
       select: {
         keyTec: true,
@@ -102,7 +101,7 @@ function userController(){
   const update = async(req, res) => {
     await Db.user.update({
       where: {
-        email: 'alice@prisma.io',
+        keyTec: clear(req.params.keyTec),
       },
       data: {
         name: 'Aruã',
@@ -115,7 +114,7 @@ function userController(){
 
     await Db.user.delete({
       where: {
-        keyTec: req.params.keyTec.replace(/\s{2,}/g, ' ').replace(/ /g,"_").substring(0,8)
+        keyTec: clear(req.params.keyTec)
       },
     }).then(()=>res.send('deletado')).catch(e=>res.send(e))
   }
@@ -126,7 +125,7 @@ function userController(){
     value = value < -999 ? -1000 : value
     await Db.user.updateMany({
       where:{
-        keyTec: req.query.tec || 'jr'
+        keyTec: clear(req.query.tec) || 'jr'
       },
       data: {
         ranking: {
