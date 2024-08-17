@@ -13,9 +13,9 @@ export const globalConfig = {
 }
 
 /**
- * sudo docker image build -t umruivo/dinheirus:0.1.35 .
- * sudo docker push umruivo/dinheirus:0.1.35
- * docker exec 82 bun prisma migrate dev
+ * sudo docker image build -t umruivo/dinheirus:0.1.36 .
+ * sudo docker push umruivo/dinheirus:0.1.36
+ * docker exec dinheirus bun prisma migrate dev
  * 
  * 
  * 
