@@ -9,8 +9,9 @@ function userController(){
   const index = (req, res) => {
     let data = {
       subtitle: 'Início',
-      texto: globalConfig.textInicio
+      texto: globalConfig.textInicio + Date()
     }
+    
     res.render('index', compact(data))
   }
 
