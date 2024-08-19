@@ -5,7 +5,7 @@ const textInicio = `<p>&nbsp O projeto Dinheirus.com, idealizado pelo professor 
 
 export const globalConfig = {
     title: 'Dinheirus - D$',
-    port: 3000, 
+    port: 3000,
     mainUrl: url,
     rootPath: __dirname,
     maxAge: 60000,
@@ -13,10 +13,10 @@ export const globalConfig = {
 }
 
 /**
- * sudo docker image build -t umruivo/dinheirus:0.1.36 .
- * sudo docker push umruivo/dinheirus:0.1.36
+ * sudo docker image build -t umruivo/dinheirus:0.1.36.1 .
+ * sudo docker push umruivo/dinheirus:0.1.36.1
  * docker exec dinheirus bun prisma migrate dev
- * 
+ * docker exec -it dinheirus bash
  * 
  * 
  */

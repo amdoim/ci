@@ -85,7 +85,10 @@ function userController(){
         cash: true,
         profile: true,
         role: true,
-        ranking: true
+        ranking: true,
+        born: true,
+        class: true,
+        shift: true
       }
     }).then((response)=>{
       if(req.query.api==true)res.send(response)
@@ -100,14 +103,19 @@ function userController(){
   }
 
   const update = async(req, res) => {
+    const data = {
+      name    : req.body.name.substring(0,80),
+      keyTec  : clear(req.body.keyTec),
+      class   : req.body.class.substring(0,8),
+      shift   : req.body.shift,
+      born    : req.body.born.substring(0,10)
+    }
     await Db.user.update({
       where: {
         keyTec: clear(req.params.keyTec),
       },
-      data: {
-        name: 'Aruã',
-      },
-    }).then(()=>res.send('atualizado')).catch(e=>res.send(e))
+      data
+    }).then(()=>res.redirect(globalConfig.mainUrl+'/@' + data.keyTec)).catch(e=>res.send(e))
   }
 
   // Delete a message with the specified messageId in the request

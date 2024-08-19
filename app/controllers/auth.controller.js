@@ -1,5 +1,5 @@
 
-import { compact } from "../utils/response.helper"
+import { compact, clear } from "../utils/response.helper"
 
 function Auth(){
     const login = async (req, res) => {
@@ -13,11 +13,19 @@ function Auth(){
        return res.render('register', compact(data))
     }
 
+    const edit = async (req, res) => {
+        const data = {
+            subtitle: "Atualizar Usuário",
+            keyTec: clear(req.params.keyTec)
+        }
+       return res.render('updateuser', compact(data))
+    }
 
 
     return {
         login,
-        register
+        register,
+        edit
     }
 }
 

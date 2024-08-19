@@ -1,4 +1,26 @@
-<form action="{{{url}}}/register" method="post">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    const user = function (id = '{{{keyTec}}}') {
+        
+         let req =    axios.get(`/@${id}?api=1`)
+                .then(function (response) {
+                    console.log(response.data);
+                    document.getElementsByName('name')[0].value = response.data.name
+                    document.getElementsByName('keyTec')[0].value = response.data.keyTec
+                    document.getElementsByName('class')[0].value = response.data.class
+                    document.getElementsByName('shift')[0].value = response.data.shift
+                    document.getElementsByName('born')[0].value = response.data.born
+                    return response
+                })
+                .catch(function (error) {
+                    alert('Aconteceu algum erro.')
+                    console.log(error);
+                });        
+    }
+    console.log(user())
+</script>
+<form action="{{{url}}}/allusers/edit@{{{keyTec}}}" method="post">
   <div class="container">
     <h1>Cadastrar usuário</h1>
     <p>Criar as contas do Dinheirus</p>
