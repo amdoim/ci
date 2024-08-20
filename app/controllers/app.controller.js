@@ -31,11 +31,11 @@ function userController(){
 
       await Db.user.create({
           data: {
-            name    : data.name     || 'Junior Alves',
-            keyTec  : data.keyTec   || 'jr',
-            shift   : data.shift    || 'Noturno',
-            born    : data.born     || 'abc',
-            class   : data.class    || 'abc',
+            name    : data.name,
+            keyTec  : data.keyTec,
+            shift   : data.shift,
+            born    : data.born,
+            class   : data.class,
             password: data.password,
             posts: {
               create: { title : 'Minha primeira Postagem' },
@@ -118,7 +118,6 @@ function userController(){
     }).then(()=>res.redirect(globalConfig.mainUrl+'/@' + data.keyTec)).catch(e=>res.send(e))
   }
 
-  // Delete a message with the specified messageId in the request
   const deleta = async (req, res) => {
 
     await Db.user.delete({
