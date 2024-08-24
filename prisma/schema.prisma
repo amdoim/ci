@@ -41,7 +41,7 @@ model User {
   role     Int      @default(3)
   active   Boolean  @default(true)
   shift    Shift
-  class    String
+  class    Classes?
   password String
   born     String
   keyTec   String   @unique
@@ -84,6 +84,14 @@ model Report {
   image       String?
 }
 
+model Classes {
+  id          Int     @id @default(autoincrement())
+  name String
+  shift Shift
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId Int     @unique
+}
+
 model Reserve {
   id    Int     @id @default(autoincrement())
   name  String
@@ -101,4 +109,5 @@ enum Shift {
   Matutino
   Vespertino
   Noturno
+  Integral
 }

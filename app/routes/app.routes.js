@@ -7,6 +7,8 @@ import appController from '../controllers/app.controller.js'
 const router = express.Router()
 
 router.use(function (req, res, next) {
+
+    if(req.session.loggedin) req.session.cookie.maxAge += 1 * 1000  * 60
     main()
     next()
   })
@@ -17,6 +19,7 @@ router.get("/register", authController.register)
 router.post("/register", userController.create)
 
 router.get("/login", authController.login)
+router.post("/login", authController.login)
 
 router.get("/allusers", userController.findAll)
 

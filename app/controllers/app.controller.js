@@ -11,15 +11,15 @@ function userController(){
     let data = {
       subtitle: 'Início',
       texto: globalConfig.textInicio ,
-      user: req.session.user
+      user: req.session.user,
+      age: req.session.cookie.maxAge / 1000 / 60
     }
-    console.log(req.session.user)
+    console.log(req.session.cookie.maxAge / 1000 / 60)
     res.render('index', compact(data))
   }
 
   const create = async (req, res) => {
     
-   
       const data = {
         name    : req.body.name.substring(0,80),
         keyTec  : clear(req.body.keyTec),
@@ -94,7 +94,8 @@ function userController(){
       if(req.query.api==true)res.send(response)
       let data = {
         ... response,
-        subtitle: 'Perfil - ' + response.name
+        subtitle: 'Perfil - ' + response.name,
+        user: req.session.user
       }
       res.render('users', compact(data))
     }).catch(()=>{

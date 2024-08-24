@@ -6,12 +6,14 @@ import md5 from "md5";
 function Auth(){
 
     const login = async (req, res) => {
-        req.session.loggedin = false
-        req.session.user = null
-        let {user, password} = req.query
+      
+        const {user, password} = req.body
 
+        if(req.session.user) res.redirect(`@${req.session.user.keyTec}`) 
         let hash = md5(password + process.env.DATABASE_URL)
-        if (!user || !password) return res.send('fim')
+        if (!user || !password) return res.render('login', compact({
+            subtitle: 'Fazer Login '
+        }))
 
         await Db.user.findUnique({
             where: {
@@ -34,10 +36,13 @@ function Auth(){
                 if(response && hash == response.password){
                     req.session.loggedin = true
                     req.session.user = response
-                    console.log(req.session.user)
-                    res.send('oik') 
+                    res.redirect('@' + response.keyTec) 
                 }
-                res.send('n')
+                res.render('login', compact({
+                    subtitle: 'Fazer Login ',
+                    user: user,
+                    error: true
+                }))
             
             }).catch((e)=>{
                 console.log(e)
