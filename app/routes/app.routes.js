@@ -8,7 +8,7 @@ const router = express.Router()
 
 router.use(function (req, res, next) {
 
-    if(req.session.loggedin) req.session.cookie.maxAge += 1 * 1000  * 60
+    if(req.session.loggedin) req.session.cookie.maxAge += 1 * 1000  * 30
     main()
     next()
   })
