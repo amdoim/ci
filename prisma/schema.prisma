@@ -91,6 +91,12 @@ model Reserve {
   new   Boolean
 }
 
+model DataStorage {
+  id        Int     @id @default(autoincrement())
+  tableName String
+  data      Json    @db.Json
+}
+
 enum Shift {
   Matutino
   Vespertino

@@ -1,7 +1,8 @@
+import { MD5 } from "bun"
 import { globalConfig } from "../../chinelo.config"
 import Db from "../model/app.model"
 import { clear, compact } from "../utils/response.helper"
-import bcrypt from "bcrypt"
+import md5 from "md5"
 
 // Create and Save a new Messages
 function userController(){
@@ -9,24 +10,23 @@ function userController(){
   const index = (req, res) => {
     let data = {
       subtitle: 'Início',
-      texto: globalConfig.textInicio + Date()
+      texto: globalConfig.textInicio ,
+      user: req.session.user
     }
-    
+    console.log(req.session.user)
     res.render('index', compact(data))
   }
 
   const create = async (req, res) => {
-    if(req.body.cmd != 'coxinha123') res.redirect('/deleted')
-  
-    bcrypt.hash(req.body.born.substring(0,10), 13, async function (err, hash) {
-      if (err) throw err;
+    
+   
       const data = {
         name    : req.body.name.substring(0,80),
         keyTec  : clear(req.body.keyTec),
         class   : req.body.class.substring(0,8),
         shift   : req.body.shift,
         born    : req.body.born.substring(0,10),
-        password: hash
+        password: md5(req.body.born + process.env.DATABASE_URL)
       }
 
       await Db.user.create({
@@ -50,9 +50,9 @@ function userController(){
       }).catch((e)=>{
         res.status(500).send({e:e})
       })
-      return hash
-    })
-  }
+      return true
+    }
+  
   
 
   // Retrieve all messages from the database.

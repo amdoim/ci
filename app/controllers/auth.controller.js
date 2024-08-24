@@ -1,18 +1,22 @@
 
 import { compact, clear } from "../utils/response.helper"
 import Db from "../model/app.model"
+import md5 from "md5";
 
 function Auth(){
 
     const login = async (req, res) => {
-        const {user, password} = req.query
+        req.session.loggedin = false
+        req.session.user = null
+        let {user, password} = req.query
 
+        let hash = md5(password + process.env.DATABASE_URL)
         if (!user || !password) return res.send('fim')
 
         await Db.user.findUnique({
             where: {
                 keyTec: clear(user),
-                active: Boolean(clear(password, 16))
+                password: hash
             },
             select: {
                 keyTec: true,
@@ -23,21 +27,23 @@ function Auth(){
                 ranking: true,
                 born: true,
                 class: true,
-                shift: true
+                shift: true,
+                password: true
             }
             }).then((response)=>{
-            if(req.query.api==true)res.send(response)
-				req.session.loggedin = true;
-				req.session.user = user;
-                console.log(req.session.loggedin, req.session.user)
-
-                res.send('okokokok')
+                if(response && hash == response.password){
+                    req.session.loggedin = true
+                    req.session.user = response
+                    console.log(req.session.user)
+                    res.send('oik') 
+                }
+                res.send('n')
             
             }).catch((e)=>{
                 console.log(e)
-            res.status(404).render('notfound', compact({subtitle: "xxxxxxPágina não encontrada!xxxxxxxx"}))
+                res.status(404).render('notfound', compact({subtitle: "xxxxxxPágina não encontrada!xxxxxxxx"}))
             })
-
+ 
 
 
 

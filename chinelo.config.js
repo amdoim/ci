@@ -8,7 +8,7 @@ export const globalConfig = {
     port: 3000,
     mainUrl: url,
     rootPath: __dirname,
-    maxAge: 60000,
+    maxAge: 360_000,
     textInicio: textInicio,
 }
 
