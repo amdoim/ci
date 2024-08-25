@@ -20,6 +20,7 @@ router.post("/register", userController.create)
 
 router.get("/login", authController.login)
 router.post("/login", authController.login)
+router.get("/logout", authController.logout)
 
 router.get("/allusers", userController.findAll)
 

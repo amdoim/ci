@@ -48,18 +48,8 @@ function Auth(){
                 console.log(e)
                 res.status(404).render('notfound', compact({subtitle: "xxxxxxPágina não encontrada!xxxxxxxx"}))
             })
- 
 
-
-
-
-
-
-
-
-
-        // res.send('fimdetudo')
-    }
+        }
 
     const register = async (req, res) => {
         const data = {
@@ -76,11 +66,17 @@ function Auth(){
        return res.render('updateuser', compact(data))
     }
 
+    const logout = async (req, res) =>{
+        req.session.user = null
+        req.session.loggedin = null
+        res.redirect('/')
+    }
 
     return {
         login,
         register,
-        edit
+        edit,
+        logout
     }
 }
 
