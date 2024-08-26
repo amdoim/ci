@@ -2,7 +2,7 @@
   <div class="w3-bar w3-black w3-card nav">
     <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
     <a href="{{{url}}}" class="w3-bar-item w3-button w3-padding-large">Dinheirus - D$</a>
-    <a href="#band" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Reserva Nacional</a>
+    <a href="{{{url}}}/reserve" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Reserva Nacional</a>
     <a href="#tour" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Loja</a>
     <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Tarefas</a>
     {{#if user.name}}
@@ -21,7 +21,7 @@
 </div>
 
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top nav" style="margin-top:46px">
-  <a href="#band" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Reserva Nacional</a>
+  <a href="{{{url}}}/reserve" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Reserva Nacional</a>
   <a href="#tour" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Loja</a>
   <a href="#contact" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Tarefas</a>
     {{#if user.name}}

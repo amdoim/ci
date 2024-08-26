@@ -38,7 +38,7 @@
     <input class="w3-input w3-border" type="password" id="password" name="born" required >
 
     <label for="senhaver" class="w3-btn w3-pale-green">VER SENHA</label>
-<input type="checkbox" name="senhaver" id="senhaver" onclick="verSenha()"> <br>
+<input type="checkbox" name="senhaver" id="senhaver" onclick="verSenha()" class="w3-check"> <br>
 
     <hr>
 
@@ -52,22 +52,21 @@
 <script>
     const user = function (id) {
         
-         let req =    axios.get(`/classes/@${id}`)
-                .then(function (response) {
-                    let turma = document.getElementById('class')
-                     for (let ix=0; ix<turma.length; ix++) {
-                              turma.remove(ix);
-                      }
-                    response.data.forEach(function(nome, i) {
-                        console.log('[forEach]', nome, i);
-                        turma.add(new Option(nome.name, nome.id));
-                      })
-                    return response
+    let req =    axios.get(`/classes/@${id}`)
+          .then(function (response) {
+              let turma = document.getElementById('class')
+                for (let ix=0; ix<turma.length; ix++) {
+                        turma.remove(ix);
+                }
+              response.data.forEach(function(nome, i) {
+                  turma.add(new Option(nome.name, nome.id));
                 })
-                .catch(function (error) {
-                    alert('Aconteceu algum erro.')
-                    console.log(error);
-                });        
+              return response
+          })
+          .catch(function (error) {
+              alert('Aconteceu algum erro.')
+              console.log(error);
+          });        
     }
 
     function verSenha() {

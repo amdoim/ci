@@ -4,6 +4,7 @@ import { isAdmin, isAuthenticated, main } from '../middlewares/main.middleware.j
 import authController from '../controllers/auth.controller.js'
 import appController from '../controllers/app.controller.js'
 import classesController from '../controllers/classes.controller.js'
+import reserveController from '../controllers/reserve.controller.js'
 
 const router = express.Router()
 
@@ -28,6 +29,9 @@ router.post("/classes", classesController.create)
 router.get("/login", authController.login)
 router.post("/login", authController.login)
 router.get("/logout", authController.logout)
+
+router.get("/reserve", reserveController.index)
+router.post("/reserve", reserveController.create)
 
 router.get("/allusers", userController.findAll)
 
