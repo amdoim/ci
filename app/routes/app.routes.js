@@ -15,9 +15,11 @@ router.use(function (req, res, next) {
     next()
   })
 
-router.get("/", function(req, res, next) {
-  isAuthenticated(req, res, next)
-}, userController.index)
+// router.get("/", function(req, res, next) {
+//   isAuthenticated(req, res, next)
+// }, userController.index)
+
+router.get('/', userController.index)
 
 router.get("/register", authController.register)
 router.post("/register", userController.create)

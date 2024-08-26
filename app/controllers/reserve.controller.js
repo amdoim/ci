@@ -24,12 +24,12 @@ function Reserve(){
                     return total + parseFloat(num.value);
                   }
                 let total = response.reduce(myFunc, 0)
-            res.render('reserve', compact({
-                data:response, 
-                subtitle: 'Reserva Nacional', 
-                admin,user: req.session.user,
-                total
-            }))
+                res.render('reserve', compact({
+                    data:response,
+                    subtitle: 'Reserva Nacional',
+                    admin,user: req.session.user,
+                    total
+                }))
             }).catch(e=>res.send(e))
     }
 
