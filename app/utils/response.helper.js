@@ -12,7 +12,7 @@ export function compact(data){
 
 
 export function clear(data, size = 8){
-  return data
+ if(data) return data
     .replace(/\s{2,}/g, ' ')
     .replace(/ /g,"_")
     .substring(0,size)

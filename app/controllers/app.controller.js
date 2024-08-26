@@ -18,6 +18,15 @@ function userController(){
     res.render('index', compact(data))
   }
 
+  const msg = (req, res) =>{
+    const {msg, color} = req.body
+
+    if(!msg && !color) res.redirect('/')
+
+    res.render(compact({msg, color, subtitle: 'Mensagem para você '}))
+
+  }
+
   const create = async (req, res) => {
     
       const data = {
@@ -35,7 +44,17 @@ function userController(){
             keyTec  : data.keyTec,
             shift   : data.shift,
             born    : data.born,
-            class   : data.class,
+            class   : {
+              create: [
+                { assignedBy: data.keyTec,
+                  assignedAt: new Date(),
+                  classes: {
+                    connect: {
+                      id: parseInt(data.class),
+                    },
+                  },
+                }
+              ]},
             password: data.password,
             posts: {
               create: { title : 'Minha primeira Postagem' },
@@ -48,7 +67,15 @@ function userController(){
         res.status(200)
         res.redirect('@'+data.keyTec)
       }).catch((e)=>{
-        res.status(500).send({e:e})
+        let data = {}
+
+        if(e.code == 'P2002')  data = {...data, msg: 'Já existe uma chave TeC'}
+
+        console.log(data)
+
+        res.render('register', compact(data))
+
+        // res.status(500).send({e:e})
       })
       return true
     }

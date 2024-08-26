@@ -1,8 +1,17 @@
+
+
 <form action="{{{url}}}/register" method="post">
   <div class="container">
     <h1>Cadastrar usuário</h1>
     <p>Criar as contas do Dinheirus</p>
     <hr>
+
+        {{#if msg}}
+            <div class="w3-panel w3-orange w3-leftbar w3-rightbar w3-border-purple">
+            <h3>Ops!</h3>
+            <p>{{{msg}}}</p>
+            </div> 
+        {{/if}}
 
     <label class="w3-text-black" for="name"><b>Seu nome</b></label><br>
     <input class="w3-input w3-border"  maxlength="80" minlength="4" type="text" name="name" required ><br>
@@ -11,23 +20,62 @@
     <input class="w3-input w3-border" maxlength="8"  minlength="2" type="text" name="keyTec" required ><br>
 
     <label class="w3-text-black" for="shift"><b>Turno</b></label><br>
-    <select class="w3-select w3-border" name="shift" >
+    <select class="w3-select w3-border" name="shift" id="shift" onchange="user(document.getElementById('shift').value)" >
+      <option value="">Selecione um turno</option>
         <option value="Matutino">Matutino</option>
         <option value="Vespertino">Vespertino</option>
         <option value="Noturno">Noturno</option>
+        <option value="Integral">Integral</option>
+        <option value="Professor">Professor</option>
     </select><br><br>
 
     <label class="w3-text-black" for="class"><b>Turma</b></label><br>
-    <input class="w3-input w3-border" type="text"  maxlength="8"  minlength="2" name="class" required ><br>
-    <input type="hidden" value="coxinha123" name="cmd">
+    <select id="class" name="class" class="w3-input w3-border" required>
+      <option value="">Selecione uma turma</option>
+    </select>
 
-    <label class="w3-text-black" for="born"><b>Data de nascimento</b></label><br>
-    <input class="w3-input w3-border" type="date" name="born" required ><br>
+    <label class="w3-text-black" for="born"><b>Senha</b></label><br>
+    <input class="w3-input w3-border" type="password" id="password" name="born" required >
 
+    <label for="senhaver" class="w3-btn w3-pale-green">VER SENHA</label>
+<input type="checkbox" name="senhaver" id="senhaver" onclick="verSenha()"> <br>
 
     <hr>
 
-    <button type="submit" class="w3-button w3-block w3-black w3-large w3-hover-dark-gray">Register</button>
+    <button type="submit" class="w3-button w3-block w3-black w3-large w3-hover-dark-gray">Cadastrar</button>
   </div>
   
 </form>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    const user = function (id) {
+        
+         let req =    axios.get(`/classes/@${id}`)
+                .then(function (response) {
+                    let turma = document.getElementById('class')
+                     for (let ix=0; ix<turma.length; ix++) {
+                              turma.remove(ix);
+                      }
+                    response.data.forEach(function(nome, i) {
+                        console.log('[forEach]', nome, i);
+                        turma.add(new Option(nome.name, nome.id));
+                      })
+                    return response
+                })
+                .catch(function (error) {
+                    alert('Aconteceu algum erro.')
+                    console.log(error);
+                });        
+    }
+
+    function verSenha() {
+      let x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+</script>

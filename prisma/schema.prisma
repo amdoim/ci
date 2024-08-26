@@ -33,20 +33,38 @@ model Profile {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
+  id       Int              @id @default(autoincrement())
   name     String
   posts    Post[]
   profile  Profile?
-  ranking  Int      @default(0)
-  role     Int      @default(3)
-  active   Boolean  @default(true)
+  ranking  Int              @default(0)
+  role     Int              @default(3)
+  active   Boolean          @default(true)
   shift    Shift
-  class    Classes?
+  class    UsersOnClasses[]
   password String
   born     String
-  keyTec   String   @unique
-  cash     Decimal  @default(0)
-  debit    Decimal  @default(0)
+  keyTec   String           @unique
+  cash     Decimal          @default(0)
+  debit    Decimal          @default(0)
+}
+
+model Classes {
+  id    Int              @id @default(autoincrement())
+  name  String
+  shift Shift
+  user  UsersOnClasses[]
+}
+
+model UsersOnClasses {
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId     Int // relation scalar field (used in the `@relation` attribute above)
+  classes    Classes  @relation(fields: [classesId], references: [id])
+  classesId  Int // relation scalar field (used in the `@relation` attribute above)
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([userId, classesId])
 }
 
 model News {
@@ -84,14 +102,6 @@ model Report {
   image       String?
 }
 
-model Classes {
-  id          Int     @id @default(autoincrement())
-  name String
-  shift Shift
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId Int     @unique
-}
-
 model Reserve {
   id    Int     @id @default(autoincrement())
   name  String
@@ -100,9 +110,9 @@ model Reserve {
 }
 
 model DataStorage {
-  id        Int     @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   tableName String
-  data      Json    @db.Json
+  data      Json   @db.Json
 }
 
 enum Shift {
@@ -110,4 +120,5 @@ enum Shift {
   Vespertino
   Noturno
   Integral
+  Professor
 }
