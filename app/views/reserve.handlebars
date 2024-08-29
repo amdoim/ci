@@ -1,4 +1,25 @@
+{{#if admin}}
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    function del (id){
+        if(confirm('ctz?')){
+            axios.delete(`/reserve/?id=${id}`)
+                .then(function (response) {
+                    alert('Excluído com sucesso.')
+                    location.reload()
+                })
+                .catch(function (error) {
+                    alert('Aconteceu algum erro.')
+                    console.log(error);
+                });
+        }
+        return false
+    }
+</script>
+
+{{/if}}
 
 
   <div class="container">
@@ -45,13 +66,13 @@
                     {{/if}}
                     </tr>
                 {{#data}}
-                    <tr>{{../admin}}
+                    <tr>
                     <td>{{{name}}}</td>
                     <td>{{{formataValor value 'BRL'}}}</td>
                     <td>{{#if new}} Novo {{else}} Usado {{/if}} </td>
                     {{#if ../admin}}
                     <td>
-                        <button class="w3-button w3-pale-red">
+                        <button class="w3-button w3-pale-red" onclick="del({{id}})">
                             Excluir
                         </button>
                     </td>

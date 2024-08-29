@@ -15,10 +15,6 @@ router.use(function (req, res, next) {
     next()
   })
 
-// router.get("/", function(req, res, next) {
-//   isAuthenticated(req, res, next)
-// }, userController.index)
-
 router.get('/', userController.index)
 
 router.get("/register", authController.register)
@@ -30,18 +26,33 @@ router.post("/classes", classesController.create)
 
 router.get("/login", authController.login)
 router.post("/login", authController.login)
-router.get("/logout", authController.logout)
+router.get("/logout", function(req, res, next) {
+  isAuthenticated(req, res, next)
+}, authController.logout)
 
 router.get("/reserve", reserveController.index)
-router.post("/reserve", reserveController.create)
+router.post("/reserve", function(req, res, next) {
+  isAuthenticated(req, res, next)
+}, reserveController.create)
+router.delete("/reserve", function(req, res, next) {
+  isAuthenticated(req, res, next)
+}, reserveController.deleta)
 
-router.get("/allusers", userController.findAll)
+router.get("/allusers", function(req, res, next) {
+  isAuthenticated(req, res, next)
+}, userController.findAll)
 
 router.get("/@:keyTec", userController.findOne)
 
-router.get("/allusers/edit@:keyTec", authController.edit)
-router.post("/allusers/edit@:keyTec", appController.update)
+router.get("/allusers/edit@:keyTec", function(req, res, next) {
+  isAuthenticated(req, res, next)
+}, authController.edit)
+router.post("/allusers/edit@:keyTec", function(req, res, next) {
+  isAuthenticated(req, res, next)
+}, appController.update)
 
-router.delete("/allusers/del@:keyTec", userController.deleta) 
+router.delete("/allusers/del@:keyTec", function(req, res, next) {
+  isAuthenticated(req, res, next)
+}, userController.deleta) 
 
 export default router

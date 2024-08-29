@@ -68,7 +68,7 @@ function Reserve(){
 
         await Db.reserve.delete({
           where: {
-            id: clear(req.query.id)
+            id: parseInt(clear(req.query.id))
           },
         }).then(()=>res.send('deletado')).catch(e=>res.send(e))
       }
