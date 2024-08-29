@@ -1,5 +1,4 @@
 FROM ubuntu
-
 RUN cd / && mkdir dineirus && chmod 777 -R dineirus/ 
 
 COPY ./ /dineirus

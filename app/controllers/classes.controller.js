@@ -18,11 +18,13 @@ function Classes(){
           if(req.query.api==true)res.send(response)
           let data = {
             ... response,
-            subtitle: 'Turmas - ' + response.name
+            subtitle: 'Turmas - ' + response.name,
+            user: req.session.user
+
           }
           res.render('classes', compact(data))
         }).catch(()=>{
-          res.status(404).render('notfound', compact({subtitle: "Página não encontradax!"}))
+          res.status(404).render('notfound', compact({subtitle: "Página não encontrada!"}))
         })
     }
 
@@ -43,7 +45,7 @@ function Classes(){
 
     const create = async (req, res) => {
 
-      if(!req.body.name) return res.render('classes', compact({subtitle: 'Cadastrando turma'}))
+      if(!req.body.name) return res.render('classes', compact({subtitle: 'Cadastrando turma', user: req.session.user}))
   
       const data = {
         name    : req.body.name.substring(0,15),

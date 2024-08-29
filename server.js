@@ -3,7 +3,7 @@ import bodyParser from "body-parser"
 import rotas from "./app/routes/app.routes"
 import cors from 'cors'
 import { globalConfig } from "./chinelo.config"
-import { engine } from "express-handlebars"
+import { engine, create} from "express-handlebars"
 import session from "express-session"
 import { compact } from "./app/utils/response.helper"
 

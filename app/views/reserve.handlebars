@@ -3,7 +3,7 @@
 
   <div class="container">
         <h1>Reserva Nacional</h1>
-        <p>Itens da Reserva Nacional do Dinheirus, total: {{{total}}}</p>
+        <p>Itens da Reserva Nacional do Dinheirus, total: {{formataValor total 'BRL'}}</p>
         <hr>
         {{#if admin}}
             {{#if msg}}
@@ -40,12 +40,22 @@
                     <th>Item</th>
                     <th>Valor</th>
                     <th>Estado</th>
+                    {{#if admin}}
+                    <th>Excluir</th>
+                    {{/if}}
                     </tr>
                 {{#data}}
-                    <tr>
+                    <tr>{{../admin}}
                     <td>{{{name}}}</td>
-                    <td>{{{value}}}</td>
+                    <td>{{{formataValor value 'BRL'}}}</td>
                     <td>{{#if new}} Novo {{else}} Usado {{/if}} </td>
+                    {{#if ../admin}}
+                    <td>
+                        <button class="w3-button w3-pale-red">
+                            Excluir
+                        </button>
+                    </td>
+                    {{/if}}
                     </tr>
                 {{/data}}
             </table>

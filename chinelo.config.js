@@ -9,14 +9,12 @@ export const globalConfig = {
     mainUrl: url,
     rootPath: __dirname,
     maxAge: 360_000,
-    textInicio: textInicio,
+    textInicio: textInicio
 }
 
 /**
- * sudo docker image build -t umruivo/dinheirus:0.1.38 .
- * sudo docker push umruivo/dinheirus:0.1.38
+ * sudo docker image build -t umruivo/dinheirus:alpine-0.1.4 .
+ * sudo docker push umruivo/dinheirus:0.1.4
  * docker exec dinheirus bun prisma migrate dev
  * docker exec -it dinheirus bash
- * 
- * 
  */

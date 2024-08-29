@@ -4,7 +4,6 @@ import Db from "../model/app.model"
 import { clear, compact } from "../utils/response.helper"
 import md5 from "md5"
 
-// Create and Save a new Messages
 function userController(){
 
   const index = (req, res) => {
@@ -14,12 +13,13 @@ function userController(){
       user: req.session.user,
       age: req.session.cookie.maxAge / 1000 / 60
     }
-    console.log(req.session.cookie.maxAge / 1000 / 60)
+
+    
     res.render('index', compact(data))
   }
 
   const msg = (req, res) =>{
-    const {msg, color} = req.body
+    const {msg, color} = req.query
 
     if(!msg && !color) res.redirect('/')
 
@@ -74,8 +74,6 @@ function userController(){
         console.log(data)
 
         res.render('register', compact(data))
-
-        // res.status(500).send({e:e})
       })
       return true
     }
@@ -180,7 +178,8 @@ function userController(){
     findAll,
     deleta,
     update,
-    rankingPlus
+    rankingPlus,
+    msg
   }
 
 }

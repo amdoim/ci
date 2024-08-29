@@ -23,12 +23,19 @@ function Reserve(){
                 function myFunc(total, num) {
                     return total + parseFloat(num.value);
                   }
+                  
                 let total = response.reduce(myFunc, 0)
                 res.render('reserve', compact({
                     data:response,
                     subtitle: 'Reserva Nacional',
-                    admin,user: req.session.user,
-                    total
+                    admin,
+                    user: req.session.user,
+                    total,
+                    helpers: {
+                      formataValor: function(price, currency) {
+                        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: currency }).format(price);
+                      }
+                    }
                 }))
             }).catch(e=>res.send(e))
     }
@@ -57,11 +64,19 @@ function Reserve(){
         return true
       }
 
-    
-    
+      const deleta = async (req, res) => {
+
+        await Db.reserve.delete({
+          where: {
+            id: clear(req.query.id)
+          },
+        }).then(()=>res.send('deletado')).catch(e=>res.send(e))
+      }
+
     return {
         index,
-        create
+        create,
+        deleta
     }
 }
 
