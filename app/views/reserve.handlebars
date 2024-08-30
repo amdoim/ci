@@ -5,22 +5,20 @@
 <script>
     function del (id){
         if(confirm('ctz?')){
-            axios.delete(`/reserve/?id=${id}`)
+            axios.delete(`/reserva.html?id=${id}`)
                 .then(function (response) {
-                    alert('Excluído com sucesso.')
                     location.reload()
                 })
                 .catch(function (error) {
                     alert('Aconteceu algum erro.')
-                    console.log(error);
-                });
+                    console.log(error)
+                })
         }
         return false
     }
 </script>
 
 {{/if}}
-
 
   <div class="container">
         <h1>Reserva Nacional</h1>
@@ -33,7 +31,7 @@
                 <p>{{{msg}}}</p>
                 </div> 
             {{/if}}
-            <form action="{{{url}}}/reserve" method="post">
+            <form action="{{{url}}}/reserva.html" method="post">
             <label class="w3-text-black" for="name"><b>Nome do Item</b></label><br>
             <input class="w3-input w3-border"  maxlength="80" minlength="2" type="text" name="name" required ><br>
 

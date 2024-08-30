@@ -2,7 +2,7 @@
   <div class="w3-bar w3-black w3-card nav">
     <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
     <a href="{{{url}}}" class="w3-bar-item w3-button w3-padding-large">Dinheirus - D$</a>
-    <a href="{{{url}}}/reserve" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Reserva Nacional</a>
+    <a href="{{{url}}}/reserva.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Reserva Nacional</a>
     <a href="#tour" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Loja</a>
     <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Tarefas</a>
     {{#if user.name}}
@@ -10,25 +10,25 @@
       <button class="w3-padding-large w3-button" title="More">{{{user.keyTec}}}<i class="fa fa-caret-down"></i></button>     
       <div class="w3-dropdown-content w3-bar-block w3-card-4">
         <a href="@{{{user.keyTec}}}" class="w3-bar-item w3-button">Perfil</a>
-        <a href="{{{url}}}/logout" class="w3-bar-item w3-button">Sair</a>
+        <a href="{{{url}}}/sair.html" class="w3-bar-item w3-button">Sair</a>
       </div>
     </div>
     {{else}}
-    <a href="{{{url}}}/login" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Entrar</a>
+    <a href="{{{url}}}/entrar.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Entrar</a>
     {{/if}}
     <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right"><i class="fa fa-search"></i></a>
   </div>
 </div>
 
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top nav" style="margin-top:46px">
-  <a href="{{{url}}}/reserve" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Reserva Nacional</a>
+  <a href="{{{url}}}/reserva.html" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Reserva Nacional</a>
   <a href="#tour" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Loja</a>
   <a href="#contact" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Tarefas</a>
     {{#if user.name}}
   <a href="{{{url}}}/@{{{user.keyTec}}}" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Perfil</a>
-  <a href="{{{url}}}/logout" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Sair</a>
+  <a href="{{{url}}}/sair.html" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Sair</a>
     {{else}}
-  <a href="{{{url}}}/login" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Entrar</a>
+  <a href="{{{url}}}/entrar.html" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Entrar</a>
     {{/if}}
 </div>
 <div id="midtop"></div>

@@ -1,5 +1,5 @@
 
-import { compact, clear } from "../utils/response.helper"
+import {  clear } from "../utils/response.helper"
 import Db from "../model/app.model"
 
 function Classes(){
@@ -22,9 +22,9 @@ function Classes(){
             user: req.session.user
 
           }
-          res.render('classes', compact(data))
+          res.render('classes', data)
         }).catch(()=>{
-          res.status(404).render('notfound', compact({subtitle: "Página não encontrada!"}))
+          res.status(404).render('notfound', {subtitle: "Página não encontrada!"})
         })
     }
 
@@ -45,7 +45,7 @@ function Classes(){
 
     const create = async (req, res) => {
 
-      if(!req.body.name) return res.render('classes', compact({subtitle: 'Cadastrando turma', user: req.session.user}))
+      if(!req.body.name) return res.render('classes', {subtitle: 'Cadastrando turma', user: req.session.user})
   
       const data = {
         name    : req.body.name.substring(0,15),

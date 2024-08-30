@@ -1,5 +1,5 @@
 
-import { compact, clear } from "../utils/response.helper"
+import {  clear } from "../utils/response.helper"
 import Db from "../model/app.model"
 import md5 from "md5";
 
@@ -11,9 +11,9 @@ function Auth(){
 
         if(req.session.user) res.redirect(`@${req.session.user.keyTec}`) 
         let hash = md5(password + process.env.DATABASE_URL)
-        if (!user || !password) return res.render('login', compact({
+        if (!user || !password) return res.render('login', {
             subtitle: 'Fazer Login '
-        }))
+        })
 
         await Db.user.findUnique({
             where: {
@@ -38,15 +38,15 @@ function Auth(){
                     req.session.user = response
                     res.redirect('@' + response.keyTec) 
                 }
-                res.render('login', compact({
+                res.render('login', {
                     subtitle: 'Fazer Login ',
                     user: user,
                     error: true
-                }))
+                })
             
             }).catch((e)=>{
                 console.log(e)
-                res.status(404).render('notfound', compact({subtitle: "xxxxxxPágina não encontrada!xxxxxxxx"}))
+                res.status(404).render('notfound', {subtitle: "xxxxxxPágina não encontrada!xxxxxxxx"})
             })
 
         }
@@ -55,7 +55,7 @@ function Auth(){
         const data = {
             subtitle: "Cadastrar Usuário"
         }
-       return res.render('register', compact(data))
+       return res.render('register', data)
     }
 
     const edit = async (req, res) => {
@@ -63,7 +63,7 @@ function Auth(){
             subtitle: "Atualizar Usuário",
             keyTec: clear(req.params.keyTec)
         }
-       return res.render('updateuser', compact(data))
+       return res.render('updateuser', data)
     }
 
     const logout = async (req, res) =>{

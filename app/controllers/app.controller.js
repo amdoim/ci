@@ -1,7 +1,7 @@
-import { MD5 } from "bun"
+
 import { globalConfig } from "../../chinelo.config"
 import Db from "../model/app.model"
-import { clear, compact } from "../utils/response.helper"
+import { clear } from "../utils/response.helper"
 import md5 from "md5"
 
 function userController(){
@@ -13,9 +13,7 @@ function userController(){
       user: req.session.user,
       age: req.session.cookie.maxAge / 1000 / 60
     }
-
-    
-    res.render('index', compact(data))
+    res.render('index', data)
   }
 
   const msg = (req, res) =>{
@@ -23,7 +21,7 @@ function userController(){
 
     if(!msg && !color) res.redirect('/')
 
-    res.render(compact({msg, color, subtitle: 'Mensagem para você '}))
+    res.render({msg, color, subtitle: 'Mensagem para você '})
 
   }
 
@@ -73,14 +71,12 @@ function userController(){
 
         console.log(data)
 
-        res.render('register', compact(data))
+        res.render('register', data)
       })
       return true
-    }
+  }
   
   
-
-  // Retrieve all messages from the database.
   const findAll = async (req, res) => {
     await Db.user.findMany({
       where: {
@@ -94,7 +90,7 @@ function userController(){
     }).catch((error)=>{
       res.status(500).send(error)
     }).then(response=>{
-      res.render('listusers', compact({data:response, subtitle: 'Listando usuários'}))
+      res.render('listusers', {data:response, subtitle: 'Listando usuários'})
     }).catch(e=>res.send(e))
   }
 
@@ -122,9 +118,9 @@ function userController(){
         subtitle: 'Perfil - ' + response.name,
         user: req.session.user
       }
-      res.render('users', compact(data))
+      res.render('users', data)
     }).catch(()=>{
-      res.status(404).render('notfound', compact({subtitle: "Página não encontrada!"}))
+      res.status(404).render('notfound', {subtitle: "Página não encontrada!"})
     })
   }
 

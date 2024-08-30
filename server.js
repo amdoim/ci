@@ -5,7 +5,6 @@ import cors from 'cors'
 import { globalConfig } from "./chinelo.config"
 import { engine, create} from "express-handlebars"
 import session from "express-session"
-import { compact } from "./app/utils/response.helper"
 
 const sec = process.env.DATABASE_URL
 
@@ -14,7 +13,12 @@ function createServer(){
     async function start(){
         
         const app = express()
-        app.engine('handlebars',engine())
+        app.engine('handlebars',engine({
+            helpers: {
+                title()     { return globalConfig.title   },
+                url()       { return globalConfig.mainUrl }
+            }
+        }))
         app.set('view engine', 'handlebars')
         app.set('views', `./app/views`)
         app.use(cors())
@@ -29,7 +33,7 @@ function createServer(){
         app.use(bodyParser.json())
         app.use(rotas)
         app.use( ( req, res, next ) => {
-            res.status( 404 ).render( "notfound", compact({subtitle: "Página não encontrada"}) )
+            res.status( 404 ).render( "notfound", {subtitle: "Página não encontrada"})
           })
         const PORT =  globalConfig.port || 3333
         app.listen(PORT, () => {

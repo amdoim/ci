@@ -1,5 +1,5 @@
 
-import { compact, clear } from "../utils/response.helper"
+import {  clear } from "../utils/response.helper"
 import Db from "../model/app.model"
 
 function Reserve(){
@@ -8,7 +8,7 @@ function Reserve(){
 
         let admin = false
 
-        if(req.session.user) 
+        if(req.session.loggedin) 
             if( req.session.user.role == 0)admin = true
 
         const {name, valor, state } = req.body
@@ -16,7 +16,7 @@ function Reserve(){
         await Db.reserve.findMany({
             orderBy: [
                 {
-                value: 'desc'
+                  value: 'desc'
                 }
             ]
             }).then(response=>{
@@ -25,7 +25,7 @@ function Reserve(){
                   }
                   
                 let total = response.reduce(myFunc, 0)
-                res.render('reserve', compact({
+                res.render('reserve', {
                     data:response,
                     subtitle: 'Reserva Nacional',
                     admin,
@@ -36,7 +36,7 @@ function Reserve(){
                         return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: currency }).format(price);
                       }
                     }
-                }))
+                })
             }).catch(e=>res.send(e))
     }
 
@@ -57,7 +57,7 @@ function Reserve(){
             },
           }).then(()=>{
           res.status(200)
-          res.redirect('/reserve/')
+          res.redirect('/reserva.html')
         }).catch((e)=>{
           res.status(500).send({e:e})
         })
