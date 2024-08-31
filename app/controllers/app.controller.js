@@ -16,6 +16,49 @@ function userController(){
     res.render('index', data)
   }
 
+  const cota = async (req, res) => {
+    let alltotal, cunhado, reserva
+    let data = {
+      subtitle: 'Cotação do Dinheirus hoje',
+      texto: globalConfig.textInicio ,
+      user: req.session.user
+    }
+    await Db.user.findMany({
+      orderBy: [
+          {
+            cash: 'desc'
+          }
+      ]
+      }).then(async response=>{
+          function myFunc(total, num) {
+              return total + parseFloat(num.cash);
+            }
+            
+          let total = await response.reduce(myFunc, 0)
+        alltotal = total
+        cunhado   = total
+
+      }).catch(e=>res.send(e))
+
+
+      await Db.reserve.findMany({
+        orderBy: [
+            {
+              value: 'desc'
+            }
+        ]
+        }).then(response=>{
+            function myFunc(total, num) {
+                return total + parseFloat(num.value);
+              }
+              
+            let total = response.reduce(myFunc, 0)
+            alltotal = total / alltotal
+            
+            res.render('cotacao', {alltotal, subtitle: `Cotação ${alltotal}`, cunhado, reserva: total})
+        }).catch(e=>res.send(e))
+  }
+
   const msg = (req, res) =>{
     const {msg, color} = req.query
 
@@ -67,7 +110,7 @@ function userController(){
       }).catch((e)=>{
         let data = {}
 
-        if(e.code == 'P2002')  data = {...data, msg: 'Já existe uma chave TeC'}
+        if(e.code == 'P2002') data = {...data, msg: 'Já existe uma chave TeC'}
 
         console.log(data)
 
@@ -175,7 +218,8 @@ function userController(){
     deleta,
     update,
     rankingPlus,
-    msg
+    msg,
+    cota
   }
 
 }

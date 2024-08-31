@@ -16,7 +16,10 @@ function createServer(){
         app.engine('handlebars',engine({
             helpers: {
                 title()     { return globalConfig.title   },
-                url()       { return globalConfig.mainUrl }
+                url()       { return globalConfig.mainUrl },
+                formataValor: function(price, currency, where = 'pt-BR') {
+                    return new Intl.NumberFormat(where, { style: 'currency', currency: currency }).format(price);
+                  }
             }
         }))
         app.set('view engine', 'handlebars')
