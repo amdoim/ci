@@ -1,20 +1,35 @@
-<p>
-    Olá esse é o perfil de <b><span{{#if itsme}} onblur="salva()" id="name" contenteditable="true" {{/if}}>{{{name}}}</span></b>, seja bem vind@!
-</p>
-    <p>Chave TeC : 
-        <b>
-            {{{keyTec}}}
-        </b>
-        <span class="w3-tooltip"> <span class="w3-badge ">?</span><span class="w3-text w3-tag w3-animate-opacity">A chave  TeC é semelhante à chave PIX, só que no Ecosistema do Dinheirus.</span></span>
-    </p>
-    <p>Ranking: <b>{{{elo ranking}}}</b>
-    </p>
-    {{#if itsme}} <p>Saldo: {{{cash}}}</p>{{/if}}
-    <p>bio: <br> 
-        <span{{#if itsme}} onblur="salva()" id="bio"  contenteditable="true" {{/if}}>
-            {{{profile.bio}}}
-        </span>
-    </p>
+
+<div class="w3-card-4">
+
+    <header class="w3-container w3-light-grey">
+    <h3><b><span{{#if itsme}} onblur="salva()" id="name" contenteditable="true" {{/if}}>{{{name}}}</span></b></h3>
+    </header>
+
+        <div class="w3-tag w3-round {{{corElo ranking}}} " style="padding:3px; margin-left: 15px">
+            <div class="w3-tag w3-round-xxlarge {{{corElo ranking}}} w3-border w3-border-white">
+                {{{elo ranking}}} {{#if itsme}} ( {{{ranking}}} ){{/if}}
+            </div>
+        </div>
+    <div class="w3-container">
+        <p>Chave TeC :
+            <b>
+                {{{keyTec}}}
+            </b>
+            <span class="w3-tooltip"> 
+                <span class="w3-badge ">?</span>
+                <span class="w3-text w3-tag w3-animate-opacity">
+                    A chave  TeC é semelhante à chave PIX, só que no Ecosistema do Dinheirus.
+                </span>
+            </span>
+        </p>
+        <hr>
+        <img src="{{{url}}}/images/avatar.png" alt="Avatar" class="w3-left w3-margin-bottom w3-margin-right w3-circle"  style="width:60px" >
+            <p>        
+                <span{{#if itsme}} onblur="salva()" id="bio"  contenteditable="true" {{/if}}>
+                        {{{profile.bio}}}
+                </span>
+            </p>
+    </div>
     {{#if itsme}} 
 
     <p>
@@ -31,4 +46,8 @@
          
         }
     </script>
+
+    {{else}}
+        <button class="w3-button w3-block w3-dark-grey">+ Enviar Dinheirus</button>
     {{/if}}
+</div>

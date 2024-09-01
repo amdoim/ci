@@ -28,7 +28,17 @@ function createServer(){
                     num > 3999 && num < 5000    ?      'Diamante'  :
                     num == 5000 ? 'Mestre' :
                     'ELO NÃO EXISTE'
+                }, 
+                corElo:  function(num){
+                    return num < 1000           ?      'w3-brown'       :
+                    num > 999  && num < 2000    ?      'w3-blue-gray'   :
+                    num > 1999 && num < 3000    ?      'w3-amber'       :
+                    num > 2999 && num < 4000    ?      'w3-light-gray'  :
+                    num > 3999 && num < 5000    ?      'w3-blue'        :
+                    num == 5000 ? 'w3-green' :
+                    'ELO NÃO EXISTE'
                 }
+
             }
         }))
         app.set('view engine', 'handlebars')
