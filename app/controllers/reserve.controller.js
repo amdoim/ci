@@ -40,15 +40,13 @@ function Reserve(){
             }).catch(e=>res.send(e))
     }
 
-
     const create = async (req, res) => {
     
         const data = {
           name    : req.body.name.substring(0,35),
           valor   : parseFloat(req.body.valor), 
-          state   : Boolean(req.body.state)
+          state   : JSON.parse(req.body.state.toLowerCase())
         }
-  
         await Db.reserve.create({
             data: {
               name    : data.name,

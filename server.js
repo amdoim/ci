@@ -19,7 +19,16 @@ function createServer(){
                 url()       { return globalConfig.mainUrl },
                 formataValor: function(price, currency, where = 'pt-BR') {
                     return new Intl.NumberFormat(where, { style: 'currency', currency: currency }).format(price);
-                  }
+                },
+                elo: function(num){
+                    return num < 1000           ?      'Bronze'    :
+                    num > 999 && num < 2000     ?      'Prata'     :
+                    num > 1999 && num < 3000    ?      'Ouro'      :
+                    num > 2999 && num < 4000    ?      'Platina'   :
+                    num > 3999 && num < 5000    ?      'Diamante'  :
+                    num == 5000 ? 'Mestre' :
+                    'ELO NÃO EXISTE'
+                }
             }
         }))
         app.set('view engine', 'handlebars')

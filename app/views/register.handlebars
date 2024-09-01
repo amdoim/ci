@@ -1,6 +1,6 @@
 
 
-<form action="{{{url}}}/register" method="post">
+<form action="{{{url}}}/cadastrar.html" method="post"  autocomplete="off">
   <div class="container">
     <h1>Cadastrar usuário</h1>
     <p>Criar as contas do Dinheirus</p>
@@ -16,7 +16,7 @@
     <label class="w3-text-black" for="name"><b>Seu nome</b></label><br>
     <input class="w3-input w3-border"  maxlength="80" minlength="4" type="text" name="name" required ><br>
 
-    <label class="w3-text-black" for="keyTec"><b>Chave TeC</b></label><br>
+    <label class="w3-text-black" for="keyTec"><b>Chave TeC</b><span class="w3-tooltip"> <span class="w3-badge ">?</span><span class="w3-text w3-tag w3-animate-opacity">A chave  TeC é semelhante à chave PIX, só que no Ecosistema do Dinheirus.</span></span></label><br>
     <input class="w3-input w3-border" maxlength="8"  minlength="2" type="text" name="keyTec" required ><br>
 
     <label class="w3-text-black" for="shift"><b>Turno</b></label><br>
@@ -31,7 +31,7 @@
 
     <label class="w3-text-black" for="class"><b>Turma</b></label><br>
     <select id="class" name="class" class="w3-input w3-border" required>
-      <option value="">Selecione uma turma</option>
+      <option>Selecione uma turma</option>
     </select>
 
     <label class="w3-text-black" for="born"><b>Senha</b></label><br>
@@ -50,14 +50,22 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
+
+    function limparSelect(selectId = "class") {
+      const select = document.getElementById(selectId);
+      while (select.firstChild) {
+        select.removeChild(select.firstChild);
+      }
+    }
     const user = function (id) {
-        
+        limparSelect()
     let req =    axios.get(`/classes/@${id}`)
           .then(function (response) {
               let turma = document.getElementById('class')
                 for (let ix=0; ix<turma.length; ix++) {
                         turma.remove(ix);
                 }
+              turma.add(new Option('Selecione uma turma'));
               response.data.forEach(function(nome, i) {
                   turma.add(new Option(nome.name, nome.id));
                 })

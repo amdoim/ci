@@ -17,45 +17,32 @@ function userController(){
   }
 
   const cota = async (req, res) => {
-    let alltotal, cunhado, reserva
-    let data = {
-      subtitle: 'Cotação do Dinheirus hoje',
-      texto: globalConfig.textInicio ,
-      user: req.session.user
-    }
-    await Db.user.findMany({
-      orderBy: [
-          {
-            cash: 'desc'
+    let alltotal, cunhado
+    await Db.user.findMany({}).then(async response=>{
+        function myFunc(total, num) {
+            return total + parseFloat(num.cash);
           }
-      ]
-      }).then(async response=>{
-          function myFunc(total, num) {
-              return total + parseFloat(num.cash);
-            }
-            
-          let total = await response.reduce(myFunc, 0)
+
+        let total = await response.reduce(myFunc, 0)
         alltotal = total
         cunhado   = total
 
       }).catch(e=>res.send(e))
 
-
-      await Db.reserve.findMany({
-        orderBy: [
-            {
-              value: 'desc'
-            }
-        ]
-        }).then(response=>{
+      await Db.reserve.findMany({}).then(response=>{
             function myFunc(total, num) {
                 return total + parseFloat(num.value);
               }
               
             let total = response.reduce(myFunc, 0)
             alltotal = total / alltotal
-            
-            res.render('cotacao', {alltotal, subtitle: `Cotação ${alltotal}`, cunhado, reserva: total})
+            res.render('cotacao', {
+              alltotal, 
+              subtitle: `Cotação ${alltotal}`, 
+              cunhado, 
+              reserva: total,
+              user: req.session.user
+            })
         }).catch(e=>res.send(e))
   }
 
@@ -139,6 +126,9 @@ function userController(){
 
  
   const findOne = async(req, res) => {
+
+    let itsme = false
+    if(req.session.user && req.session.user.keyTec == req.params.keyTec) {itsme = true}
     await Db.user.findUnique({
       where: {
         keyTec: (clear(req.params.keyTec))
@@ -159,7 +149,8 @@ function userController(){
       let data = {
         ... response,
         subtitle: 'Perfil - ' + response.name,
-        user: req.session.user
+        user: req.session.user,
+        itsme
       }
       res.render('users', data)
     }).catch(()=>{

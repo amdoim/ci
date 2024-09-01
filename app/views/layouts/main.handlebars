@@ -14,6 +14,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title> {{{subtitle}}} | {{{title}}}</title>
     <link rel="icon" type="image/x-icon" href="{{{url}}}/favicon.ico">
+    <script>
+        let docTitle = document.title
+        window.addEventListener('blur', ()=>{
+            document.title ='Volte, te esperamos 😊'
+        })
+        window.addEventListener('focus', ()=>{
+            document.title = docTitle
+        })
+    </script>
     <style>
         .nav{
             font-size: larger !important;
